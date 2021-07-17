@@ -1,6 +1,6 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
 .App-logo {
   height: 40vmin;
@@ -35,4 +35,39 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Navigation */
+#navbar {
+  height: 100px;
+  padding: 5px 40px;
+  display: flex;
+  font-size: 1.6rem;
+  margin: 0;
+  justify-content: space-between;
+  align-items: center;
+};
+
+#logo{
+  font-family: 'Chango', cursive;
+}
+#navbar-controls{
+  width: 40%;
+  display: flex;
+  justify-content: space-around;
+  font-size: 1.3rem;
+  align-items: center;
+}
+
+#navbar-controls > button{
+  padding: 6px;
+  font-size: 1.3rem;
+  
+}
+
+#brand{
+  flex-shrink: 1;
+}
+#navbar > p {
+  margin: 0;
 }

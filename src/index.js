@@ -2,10 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-
+import { BrowserRouter, Switch, Route } from "react-router-dom"
+import studyHelperIndex from './studyHelper/studyHelperIndex'
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={App} />
+        <Route exact path="/study" component={studyHelperIndex}/>
+
+      </Switch>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -2,7 +2,7 @@ import './logo.png'
 function Navigation() {
     return (
         <div id="navbar">
-            <p id="brand"><sans id='logo'>MyI</sans> MyInfo</p>
+            <p id="logo">MyInfo</p>
                 <div id="navbar-controls">
                     <a >Services</a>
                     <a >Contact</a>

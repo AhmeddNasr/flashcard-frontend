@@ -4,8 +4,8 @@ function ListOfTerms(props) {
     for(let i = 0; i < props.terms.length; i++){
         terms.push(
             <div className="termList-term">
-                <div key={`${i}-title`} className="termList-title">{i+1}- {props.terms[i].title}</div>
-                <div key={`${i}-definition`} className="termList-definition">{props.terms[i].definition}</div>
+                <div key={`${i}-title`} className="termList-title termList">{i+1}- {props.terms[i].title}</div>
+                <div key={`${i}-definition`} className="termList-definition termList">{props.terms[i].definition}</div>
             </div>
         )
     }

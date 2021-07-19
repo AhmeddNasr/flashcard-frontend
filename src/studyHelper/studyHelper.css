@@ -2,9 +2,10 @@
     /* --dark-background: #121212; */
 }
 
-html {
+body {
     /* background: var(--dark-background); */
     /* color: white; */
+    padding: 20px;
 }
 
 #flashcard{
@@ -12,9 +13,9 @@ html {
     flex-direction: column;
     width: 600px;
     height: 337px;
-    margin: 20px;
     border: 1px black solid;
     border-radius: 15px;
+    margin-bottom: 40px;
 }
 
 /* settings icon in flashcard */
@@ -99,4 +100,8 @@ button:hover{
 
 .active {
     display: block !important;
+}
+
+.empty-input {
+    background-color: rgba(255, 0, 0, 0.295);
 }

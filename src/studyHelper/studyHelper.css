@@ -10,33 +10,61 @@ html {
 #flashcard{
     display: flex;
     flex-direction: column;
-    width: 400px;
+    width: 600px;
+    height: 337px;
     margin: 20px;
     border: 1px black solid;
+    border-radius: 15px;
 }
 
 #flashcard > i{
-    justify-self: flex-end !important;
-    width: 5px;
+    margin: 3px 3px 3px auto;
+    padding: 8px;
+}
+
+#flashcard > i:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.301);
+    border-radius: 25px;
 }
 
 #flashcard-inner {
-    padding: 50px 0px;
-    border-radius: 2px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding: 10px 0px;
+    margin: 5px 0px;
     text-align: center;
     user-select: none;
+    text-align: center;
+
+    /* for centering text */
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow: auto;
+}
+
+#flashcard-inner > p{
+    padding: 0 11px;
+    flex-shrink: 1;
 }
 
 #flashcard-controls{
     margin : 2px;
-    flex-grow: 1;
+    flex-grow: 0;
+    flex-shrink: 0;
     display: flex;
     justify-content: space-evenly;
-
+    height: 70px;
 }
+
+/* button design */
 
 #flashcard-controls > button{
     flex-grow: 1;
+    flex-shrink: 1;
     border: none;
     border-radius: 0px;
     background-color: rgb(29, 29, 29);
@@ -47,14 +75,20 @@ html {
 }
 
 button:nth-child(2) {
-    border-right: 2px white solid !important;
+    /* border-right: 2px white solid !important; */
     border-left: 2px white solid !important;
 }
-
-button:active{
-    transform: scale(0.95);
+button:nth-child(1) {
+    border-bottom-left-radius: 15px !important;
+}
+button:nth-child(2) {
+    border-bottom-right-radius: 15px !important;
 }
 
+button:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
 
 #flashcard-title, #flashcard-definition {
     display: none;

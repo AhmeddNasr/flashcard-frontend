@@ -18,9 +18,9 @@ function FlashCard(props) {
                 </p>
             </div>
             <div id="flashcard-controls">
-                <button>correct</button>
-                <button>false</button>
-                <button>related</button>
+                <button>I got it</button>
+                <button>Study again</button>
+                
             </div>
         </div>
     );

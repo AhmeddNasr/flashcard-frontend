@@ -39,10 +39,8 @@ function StudyHelperIndex() {
         ]
     return (
         <div id="studyHelper">
-            <FlashCard activeTerm={mockData[activeTerm]} nextTerm={() => nextTerm()}/>
-            <ul>
-                <ListOfTerms terms={mockData}/>
-            </ul>
+            <FlashCard activeTerm={mockData[activeTerm]} nextTerm={() => nextTerm()}/>                
+            <ListOfTerms terms={mockData}/>
         </div>
     );
 }

@@ -1,3 +1,22 @@
+.termList-term{
+    width: 600px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    border: 1px black solid;
+    border-radius: 10px;
+}
 .termList-title{
-    display: none;
+    padding: 3px;
+    flex-basis: 25%;
+    border-right: 1px black solid;
+    margin-right: 40px;
+    margin: 8px 40px 8px 5px;
+}
+.termList-definition{
+    /* fill remaining space */
+    flex-basis: 0;
+    flex-grow: 1;
 }

@@ -1,16 +1,14 @@
 function ListOfTerms(props) {
     let terms = [];
-    props.terms.forEach((term) => {
-        // used a counter in lieu of index
-        let counter = 0;
+
+    for(let i = 0; i < props.terms.length; i++){
         terms.push(
             <div className="termList-term">
-                <div key={`${counter}-title`} className="termList-title">{term.title}</div>
-                <div key={`${counter}-definition`} className="termList-definition">{term.definition}</div>
+                <div key={`${i}-title`} className="termList-title">{i+1}- {props.terms[i].title}</div>
+                <div key={`${i}-definition`} className="termList-definition">{props.terms[i].definition}</div>
             </div>
         )
-        counter++;
-    })
+    }
     return terms;
 }
 

@@ -10,7 +10,6 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={App} />
         <Route exact path="/study" component={StudyHelperIndex}/>
-
       </Switch>
     </BrowserRouter>
   </React.StrictMode>,

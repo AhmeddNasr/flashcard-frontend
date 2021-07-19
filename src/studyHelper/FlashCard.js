@@ -9,7 +9,7 @@ function FlashCard(props) {
     return (
         <div id="flashcard">
             <i class="fas fa-ellipsis-v"></i>
-            <div id="flashcard-inner" onClick={() => handleClick()}>
+            <div id="flashcard-inner" onClick={handleClick}>
                 <p id="flashcard-title" className={isActive ? "active" : null}>
                     {props.activeTerm.title}
                 </p>
@@ -18,9 +18,9 @@ function FlashCard(props) {
                 </p>
             </div>
             <div id="flashcard-controls">
-                <button>I got it</button>
-                <button>Study again</button>
-                
+                <button onClick={() => props.nextTerm()}>I got it</button>
+                <button onClick={() => props.nextTerm()}>Study again</button>
+                {/* <button>Study again</button> */}
             </div>
         </div>
     );

@@ -1,4 +1,3 @@
-import './logo.png'
 import { Link } from 'react-router-dom'
 function Navigation() {
     return (
@@ -6,10 +5,10 @@ function Navigation() {
             <p id="logo">MyInfo</p>
                 <div id="navbar-controls">
                     <Link to="/study">Services</Link>
-                    <a >Contact</a>
-                    <a >Donate</a>
-                    <a >About</a>
-                    <a >My Account</a>
+                    <Link to="/study">Contact</Link>
+                    <Link to="/study">Donate</Link>
+                    <Link to="/study">About</Link>
+                    <Link to="/study">My Account</Link>
                     <button>Login</button>
                 </div>
         </div>

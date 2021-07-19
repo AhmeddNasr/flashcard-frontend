@@ -1,10 +1,19 @@
+import react, {useState} from 'react';
 import FlashCard from "./FlashCard";
 import "./studyHelper.css";
-function studyHelperIndex() {
+function StudyHelperIndex() {
+    let mockData = {
+        title: 'title 1',
+        definition: 'definition 1',
+        accuracy: 0.25,
+        priority: 0,
+    }
+    const [activeTerm, setActiveTerm] = useState(mockData);
     return (
         <div id="studyHelper">
-            <FlashCard />
+            <FlashCard activeTerm={activeTerm} />
+            
         </div>
     );
 }
-export default studyHelperIndex;
+export default StudyHelperIndex;

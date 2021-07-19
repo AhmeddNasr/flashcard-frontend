@@ -1,25 +1,20 @@
 import React, { useState } from "react";
-function FlashCard() {
+function FlashCard(props) {
     const [isActive, setActive] = useState(false);
 
     const handleClick = () => {
         setActive(!isActive);
     }
 
-    let mockData = {
-        title: 'title 1',
-        definition: 'definition 1',
-        accuracy: 0.25,
-    }
-
     return (
         <div id="flashcard">
+            <i class="fas fa-ellipsis-v"></i>
             <div id="flashcard-inner" onClick={() => handleClick()}>
                 <p id="flashcard-title" className={isActive ? "active" : null}>
-                    {mockData.title}
+                    {props.activeTerm.title}
                 </p>
                 <p id="flashcard-definition" className={!isActive? "active" : null}>
-                    {mockData.definition}
+                    {props.activeTerm.definition}
                 </p>
             </div>
             <div id="flashcard-controls">

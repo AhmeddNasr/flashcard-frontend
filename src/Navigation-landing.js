@@ -1,10 +1,11 @@
 import './logo.png'
+import { Link } from 'react-router-dom'
 function Navigation() {
     return (
         <div id="navbar">
             <p id="logo">MyInfo</p>
                 <div id="navbar-controls">
-                    <a >Services</a>
+                    <Link to="/study">Services</Link>
                     <a >Contact</a>
                     <a >Donate</a>
                     <a >About</a>

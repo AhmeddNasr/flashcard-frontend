@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { BrowserRouter, Switch, Route } from "react-router-dom"
-import studyHelperIndex from './studyHelper/studyHelperIndex'
+import StudyHelperIndex from './studyHelper/StudyHelperIndex'
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={App} />
-        <Route exact path="/study" component={studyHelperIndex}/>
+        <Route exact path="/study" component={StudyHelperIndex}/>
 
       </Switch>
     </BrowserRouter>

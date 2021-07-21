@@ -15,7 +15,7 @@ function StudyHelperIndex() {
             },  
             {
                 title: 'title 2',
-                definition: 'r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam',
+                definition: 'r  a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam',
                 accuracy: 0.25,
                 priority: 0,
             },
@@ -79,8 +79,8 @@ function StudyHelperIndex() {
             <FlashCard activeTerm={mockData[activeTerm]} nextTerm={() => nextTerm()}/>
             <p className="termList-sectionTitle">Add a new term</p>
             <form id="termList-form">
-                <textarea type="text" id="termList-title-input" placeholder="Term" className="termList-input" minlength="1"></textarea>
-                <textarea type="text" id="termList-definition-input" placeholder="Definition" className="termList-input" minlength="1"></textarea>
+                <textarea type="text" id="termList-title-input" placeholder="Term" className="termList-input" minLength="1"></textarea>
+                <textarea type="text" id="termList-definition-input" placeholder="Definition" className="termList-input" minLength="1"></textarea>
             </form>
             <button onClick={() => addItem()}>Add</button>
             <p className="termList-sectionTitle">List of terms in this class ({mockData.length})</p>                

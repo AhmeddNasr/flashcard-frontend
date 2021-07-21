@@ -2,6 +2,23 @@
     padding: 5px;
 }
 
+.term {
+    margin: 10px 0px;
+    width: 600px;
+}
+
+.term:hover {
+    cursor: pointer;
+}
+
+/* style child when parent div is hovered */
+.term:hover > .termList-term {
+    cursor: pointer;
+    background-color: #121212d5;
+    color: rgb(206, 206, 206);
+    transition: background-color 0.2s;
+}
+
 .termList-sectionTitle {
     font-size: 1.3em;
 }
@@ -10,41 +27,46 @@
     width: 600px;
     display: flex;
     flex-direction: row;
-    margin: 10px 0px;
+    align-items: start;
     border: 1px black solid;
-    border-radius: 10px;
+    border-radius: 3px;
+    padding: 5px;
+    /* move inner div behind so click event always targets the parent div */
+    position: relative;
+    z-index: -1;
 }
 .termList-title{
-    padding: 3px;
+    /* padding: 3px; */
     flex-basis: 25%;
     border-right: 1px black solid;
-    margin-right: 40px;
-    margin: 8px 40px 8px 5px;
+    /* margin: 8px 0px 8px 5px; */
 }
 .termList-definition{
     /* fill remaining space */
     flex-basis: 0;
     flex-grow: 1;
+    margin-left: 40px;
+}
+
+/* expand term list */
+/* TODO */
+#active-term{
+    margin-bottom: 0;
+    background-color: #121212d5;
+    color:rgb(206, 206, 206);
+}
+
+.termList-expanded{
+    display: none;
+    border: 1px black solid;
+    border-top: none;
+    border-radius: 3px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
 }
 
 /* Add new term */
 
 #termList-title-input{
     margin-right: 40px;
-}
-
-#termList-title-input,
-#termList-definition-input{
-    
-}
-
-#termList-title-input:focus,
-#termList-definition-input:focus{
-    
-}
-
-
-
-#termList-title-input{
-    
 }

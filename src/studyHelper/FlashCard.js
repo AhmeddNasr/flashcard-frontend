@@ -8,7 +8,7 @@ function FlashCard(props) {
 
     return (
         <div id="flashcard">
-            <i class="fas fa-ellipsis-v"></i>
+            <i className="fas fa-ellipsis-v"></i>
             <div id="flashcard-inner" onClick={handleClick}>
                 <p id="flashcard-title" className={isActive ? "active" : null}>
                     {props.activeTerm.title}

@@ -38,8 +38,10 @@
 .termList-input {
     width: 100%;
     flex-grow: 1;
-    margin-bottom: 10px;
     border: none;
+    /* border-bottom: #393939 5px solid; */
+    border-radius: 0px;
+    margin-bottom: 10px;
     font-size: 1rem;
     font-family: inherit;
     resize: none;
@@ -47,11 +49,17 @@
 
 .termList-input:focus {
     outline: none;
-    border-bottom: #393939 5px solid;
+    border-bottom: #ffcd1f 5px solid;
     margin-bottom: 5px;
 }
 
 .termList-input::placeholder{
     font-size: 1rem;
     color: rgba(0, 0, 0, 0.418);
+}
+
+/* VALIDITY CHECKER */
+.empty-input {
+    background-color: #FFCCCC;
+    color: rgb(112, 0, 0);
 }

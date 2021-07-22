@@ -3,7 +3,7 @@ import FlashCard from "./FlashCard";
 import ListOfTerms from "./ListOfTerms";
 import NewTerm from './NewTerm'
 import textareaAutoSize from './textareaAutoSize';
-
+import addItemToArray from './addItem';
 import "./studyHelper.css";
 import "./listOfTerms.css"
 function StudyHelperIndex() {
@@ -47,45 +47,15 @@ function StudyHelperIndex() {
         setActiveTerm((activeTerm + 1)%mockData.length);
     }
 
-    const addItem = (e) => {
-        let titleInput = document.getElementById('termList-title-input');
-        let definitionInput = document.getElementById('termList-definition-input');
-        // check empty value
-        let emptyInput = false;
-        if (titleInput.value.length < 1) {
-            titleInput.classList.add('empty-input');
-            emptyInput = true;
-        }
-        if (definitionInput.value.length < 1) {
-            definitionInput.classList.add('empty-input');
-            return;
-        }
-        if (emptyInput) {
-            return;
-        }
-        // mock schema
-        let item = {
-            title: titleInput.value,
-            definition: definitionInput.value,
-            accuracy: 0,
-            priority: 0,
-        };
-        // temporary: copy mock array and push item then set the state
-        let tempArray = [...mockData];
-        tempArray.push(item);
-        setMockData(tempArray);
-        // Clear input fields to avoid accidental multiple submittion of same card
-        titleInput.value = '';
-        definitionInput.value = '';
-        titleInput.classList.remove('empty-input');
-        definitionInput.classList.remove('empty-input');
+    const addItem = (mockDataArray) => {
+        mockDataArray = addItemToArray(mockDataArray);
+        // setMockData(mockDataArray);
     }
-
     
     return (
         <div id="studyHelper">
             <FlashCard activeTerm={mockData[activeTerm]} nextTerm={() => nextTerm()}/>
-            <NewTerm addItem={() => {addItem()}}/>
+            <NewTerm addItem={() => addItem(mockDataArray)}/>
             <p className="termList-sectionTitle">List of terms in this class ({mockData.length})</p>                
             <ListOfTerms terms={mockData}/>
         </div>

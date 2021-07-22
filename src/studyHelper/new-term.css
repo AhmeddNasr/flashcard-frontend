@@ -11,6 +11,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border: 1px solid black;
+    margin: 0;
 }
 
 #new-term-expand:hover {
@@ -22,19 +24,34 @@
 #new-term-form {
     display: none;
     align-items: flex-start;
+    flex-direction: column;
     padding: 10px;
     border: 1px black solid;
+    border-top: 0px;
 }
 
+#new-term-form {
+    font-size: 1.3rem;
+    font-weight: 500;
+}
 /* textarea */
-
-#termList-title-input {
-    margin-right: 10px;
+.termList-input {
+    width: 100%;
+    flex-grow: 1;
+    margin-bottom: 10px;
+    border: none;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: none;
 }
 
+.termList-input:focus {
+    outline: none;
+    border-bottom: #393939 5px solid;
+    margin-bottom: 5px;
+}
 
-.termList-input {
-    border: 1px black solid;
-    resize: none;
-    
+.termList-input::placeholder{
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.418);
 }

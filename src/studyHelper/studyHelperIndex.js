@@ -11,7 +11,6 @@ function StudyHelperIndex() {
     useEffect(() => {
         textareaAutoSize();
     }, [])
-    // index of displayed term
     let mockDataArray = 
         [ 
             {
@@ -39,8 +38,10 @@ function StudyHelperIndex() {
                 priority: 0,
             },
         ]
+    // index of displayed term
     const [activeTerm, setActiveTerm] = useState(0);
     const [mockData, setMockData] = useState(mockDataArray);
+    
     // cycle displayed term when 'I got it' or 'Study again' button is pressed
     const nextTerm = () => {
         setActiveTerm((activeTerm + 1)%mockData.length);

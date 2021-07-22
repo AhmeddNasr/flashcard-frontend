@@ -1,7 +1,7 @@
 function textareaAutoSize() {
     const tx = document.getElementsByTagName("textarea");
     for (let i = 0; i < tx.length; i++) {
-        tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight > 30 ? tx[i].scrollHeight : '30') + "px;overflow-y:hidden;");
+        tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight > 47 ? tx[i].scrollHeight : '47') + "px;overflow-y:hidden;");
         tx[i].addEventListener("input", OnInput, false);
     }
     

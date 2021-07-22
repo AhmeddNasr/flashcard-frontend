@@ -1,9 +1,16 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import FlashCard from "./FlashCard";
 import ListOfTerms from "./ListOfTerms";
+import NewTerm from './NewTerm'
+import textareaAutoSize from './textareaAutoSize';
+
 import "./studyHelper.css";
 import "./listOfTerms.css"
 function StudyHelperIndex() {
+    // auto size text area
+    useEffect(() => {
+        textareaAutoSize();
+    }, [])
     // index of displayed term
     let mockDataArray = 
         [ 
@@ -39,7 +46,7 @@ function StudyHelperIndex() {
         setActiveTerm((activeTerm + 1)%mockData.length);
     }
 
-    const addItem = () => {
+    const addItem = (e) => {
         let titleInput = document.getElementById('termList-title-input');
         let definitionInput = document.getElementById('termList-definition-input');
         // check empty value
@@ -77,12 +84,7 @@ function StudyHelperIndex() {
     return (
         <div id="studyHelper">
             <FlashCard activeTerm={mockData[activeTerm]} nextTerm={() => nextTerm()}/>
-            <p className="termList-sectionTitle">Add a new term</p>
-            <form id="termList-form">
-                <textarea type="text" id="termList-title-input" placeholder="Term" className="termList-input" minLength="1"></textarea>
-                <textarea type="text" id="termList-definition-input" placeholder="Definition" className="termList-input" minLength="1"></textarea>
-            </form>
-            <button onClick={() => addItem()}>Add</button>
+            <NewTerm addItem={() => {addItem()}}/>
             <p className="termList-sectionTitle">List of terms in this class ({mockData.length})</p>                
             <ListOfTerms terms={mockData}/>
         </div>

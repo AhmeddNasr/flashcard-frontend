@@ -71,7 +71,7 @@ body {
 
 /* button design */
 
-#flashcard-controls > button{
+.flashcard-controls-button{
     flex-grow: 1;
     flex-shrink: 1;
     border: none;
@@ -84,18 +84,18 @@ body {
 }
 
 /* round buttons lower corners of flashcard buttons*/
-button:nth-child(2) {
+.flashcard-controls-button:nth-child(2) {
     /* border-right: 2px white solid !important; */
     border-left: 2px white solid !important;
 }
-button:nth-child(1) {
+.flashcard-controls-button:nth-child(1) {
     border-bottom-left-radius: 15px !important;
 }
-button:nth-child(2) {
+.flashcard-controls-button:nth-child(2) {
     border-bottom-right-radius: 15px !important;
 }
 
-button:hover{
+.flashcard-controls-button:hover{
     opacity: 0.8;
     cursor: pointer;
 }

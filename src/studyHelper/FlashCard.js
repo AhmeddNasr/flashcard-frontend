@@ -18,8 +18,8 @@ function FlashCard(props) {
                 </p>
             </div>
             <div id="flashcard-controls">
-                <button onClick={() => props.nextTerm()}>I got it</button>
-                <button onClick={() => props.nextTerm()}>Study again</button>
+                <button className='flashcard-controls-button' onClick={() => props.nextTerm()}>I got it</button>
+                <button className='flashcard-controls-button' onClick={() => props.nextTerm()}>Study again</button>
                 {/* <button>Study again</button> */}
             </div>
         </div>

@@ -19,6 +19,16 @@
     transition: background-color 0.2s;
 }
 
+.term:hover > .termList-term > .termList-title {
+    border-right: 1px solid rgba(206, 206, 206, 0.562);
+}
+
+.termList {
+    /* white-space:pre; */
+    overflow: hidden;
+    overflow-wrap: break-word !important;
+}
+
 .termList-sectionTitle {
     font-size: 1.3em;
 }
@@ -27,7 +37,7 @@
     width: 600px;
     display: flex;
     flex-direction: row;
-    align-items: start;
+    align-items: flex-start;
     border: 1px black solid;
     border-radius: 3px;
     padding: 5px;
@@ -38,7 +48,7 @@
 .termList-title{
     /* padding: 3px; */
     flex-basis: 25%;
-    border-right: 1px black solid;
+    border-right: 1px rgba(0, 0, 0, 0.26) solid;
     /* margin: 8px 0px 8px 5px; */
 }
 .termList-definition{
@@ -65,8 +75,3 @@
     border-top-left-radius: 0px;
 }
 
-/* Add new term */
-
-#termList-title-input{
-    margin-right: 40px;
-}

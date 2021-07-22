@@ -1,0 +1,40 @@
+#new-term {
+    max-width: 600px;
+}
+
+#new-term-expand {
+    max-width: 600px;
+}
+
+#new-term-expand>.termList-sectionTitle {
+    padding: 4px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#new-term-expand:hover {
+    cursor: pointer;
+    background-color: #121212d5;
+    color: rgb(206, 206, 206);
+}
+
+#new-term-form {
+    display: none;
+    align-items: flex-start;
+    padding: 10px;
+    border: 1px black solid;
+}
+
+/* textarea */
+
+#termList-title-input {
+    margin-right: 10px;
+}
+
+
+.termList-input {
+    border: 1px black solid;
+    resize: none;
+    
+}

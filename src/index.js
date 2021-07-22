@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 import StudyHelperIndex from './studyHelper/StudyHelperIndex'
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

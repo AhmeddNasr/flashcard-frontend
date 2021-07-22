@@ -25,7 +25,7 @@
     display: none;
     align-items: flex-start;
     flex-direction: column;
-    padding: 10px;
+    padding: 20px;
     border: 1px black solid;
     border-top: 0px;
 }
@@ -44,9 +44,13 @@
     margin-bottom: 10px;
     font-size: 1rem;
     font-family: inherit;
+    box-shadow: 0 0 3px rgb(204, 204, 204);
     resize: none;
 }
 
+.termList-definition-input-container {
+    width: 100%;
+}
 .termList-input:focus {
     outline: none;
     border-bottom: #ffcd1f 5px solid;
@@ -62,4 +66,8 @@
 .empty-input {
     background-color: #FFCCCC;
     color: rgb(112, 0, 0);
+}
+
+.empty-input:focus {
+    border-bottom-color: rgb(112, 0, 0);
 }

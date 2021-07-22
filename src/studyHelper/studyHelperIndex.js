@@ -10,7 +10,7 @@ function StudyHelperIndex() {
     // auto size text area
     useEffect(() => {
         textareaAutoSize();
-    }, [])
+    })
     let mockDataArray = 
         [ 
             {

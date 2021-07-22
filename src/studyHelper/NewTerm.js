@@ -9,12 +9,10 @@ function NewTerm(props) {
     const expandForm = function() {
         let form = document.getElementById('new-term-form');
         if (form.style.display !== 'flex') {
-            console.log(form);
             let title = document.getElementById('termList-title-input');
             form.style.display = 'flex';
             title.focus();
         } else {
-            console.log(form);
             form.style.display = 'none';
         }
     }

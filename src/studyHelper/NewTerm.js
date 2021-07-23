@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import DefinitionInput from './DefinitionInput.js'
-// import addItemToArray from './addItem';
-import './new-term.css'
+import './styles/new-term.css'
 
 
 function NewTerm(props) {
     const [definitionCount, setDefinitionCount] = useState(1);
 
+    //TODO
     const expandForm = function() {
         let form = document.getElementById('new-term-form');
         if (form.style.display !== 'flex') {
@@ -22,16 +22,11 @@ function NewTerm(props) {
         setDefinitionCount(definitionCount+1);
     }
 
-    useEffect(() => {
-        // let definitionInputs = document.querySelectorAll('.termList-definition-title-input');
-        // let term = document.querySelector('.termList-title-input');
-        // if(definitionInputs[0]) {
-        //     let firstDefinition = definitionInputs[0];
-        //     if (firstDefinition.value === '' && term.value !== '') {
-        //             firstDefinition.value = 'Definition?';
-        //         }
-        // }
-        // above is useless
+    const resetDefinition = function () {
+        setDefinitionCount(1);
+    }
+
+    // useEffect(() => {
         // let lastDefinition = definitionInputs[definitionInputs.length-1];
         // lastDefinition.focus();
         // TODO
@@ -40,7 +35,8 @@ function NewTerm(props) {
         //     top: lastDefinitionPosition,
         //     behavior: 'smooth'
         // })        
-    }, [definitionCount])
+    // }, [definitionCount])
+    
     return (
         <div id="new-term">
             <div id="new-term-expand" onClick={() => { expandForm() }}>
@@ -51,7 +47,10 @@ function NewTerm(props) {
                 <textarea type="text" id="termList-title-input" placeholder="Enter term" className="termList-input termList-title-input" minLength="1"></textarea>
                 <DefinitionInput count={definitionCount}/>
                 <button type="button" onClick={() => addDefinition()}>Add another back</button>
-                <button type="button" style={{ width: '40px' }} onClick={(newArray) => props.addItem(newArray)}>Add</button>
+                <button type="button" style={{ width: '40px' }} onClick={(newArray) => {
+                    props.addItem(newArray);
+                    resetDefinition();
+                    }}>Add</button>
             </form>
         </div>
     )

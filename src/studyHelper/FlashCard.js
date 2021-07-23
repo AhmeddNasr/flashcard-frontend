@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 function FlashCard(props) {
+    //props -> activeTerm and nextTerm()
     const [isActive, setActive] = useState(false);
-
     const handleClick = () => {
         setActive(!isActive);
     }
-
     return (
         <div id="flashcard">
             <i className="fas fa-ellipsis-v"></i>

@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react';
 import FlashCard from "./FlashCard";
-import ListOfTerms from "./ListOfTerms";
+import TermList from "./TermList";
 import NewTerm from './NewTerm'
 import textareaAutoSize from './textareaAutoSize';
 import addItemToArray from './addItem';
-import "./studyHelper.css";
-import "./listOfTerms.css"
+import "./styles/studyHelper.css";
+
 function StudyHelperIndex() {
     // auto size text area
     useEffect(() => {
@@ -14,31 +14,59 @@ function StudyHelperIndex() {
     let mockDataArray = 
         [ 
             {
-                title: 'title 1',
-                definition: 'r a erat nam',
-                accuracy: 0.25,
-                priority: 0,
-            },  
-            {
-                title: 'title 2',
-                definition: 'r  a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nama erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam r a erat nam',
-                accuracy: 0.25,
-                priority: 0,
+                id: 1,
+                termTitle: 'Term 1',
+                questions: [{
+                    id: 1,
+                    question: 'Question 1',
+                    answer: 'Answer 1',
+                    accuracy: 0,
+                },
+                {
+                    id: 2,
+                    question: 'Question 2',
+                    answer: 'Answer 2',
+                    accuracy: 0,
+                }],
+                accuracy: 0,
             },
             {
-                title: 'title 3',
-                definition: 'r a erat nam',
-                accuracy: 0.25,
-                priority: 0,
+                id: 2,
+                termTitle: 'Term 2',
+                questions: [{
+                    id: 1,
+                    question: 'Question 1',
+                    answer: 'Answer 1',
+                    accuracy: 0,
+                },
+                {
+                    id: 2,
+                    question: 'Question 2',
+                    answer: 'Answer 2',
+                    accuracy: 0,
+                }],
+                accuracy: 0,
             },
             {
-                title: 'title 4',
-                definition: 'r a erat nam',
-                accuracy: 0.25,
-                priority: 0,
+                id: 3,
+                termTitle: 'Term 3',
+                questions: [{
+                    id: 1,
+                    question: 'Question 1',
+                    answer: 'Answer 1',
+                    accuracy: 0,
+                },
+                {
+                    id: 2,
+                    question: 'Question 2',
+                    answer: 'Answer 2',
+                    accuracy: 0,
+                }],
+                accuracy: 0,
             },
         ]
-    // index of displayed term
+
+    // index of displayed term on the flash card
     const [activeTerm, setActiveTerm] = useState(0);
     const [mockData, setMockData] = useState(mockDataArray);
     
@@ -48,9 +76,9 @@ function StudyHelperIndex() {
     }
 
     const addItem = () => {
-        let newArray = addItemToArray(mockDataArray);
+        let newArray = addItemToArray(mockData);
         // check if error occured (when input is empty))
-        if(addItemToArray) {
+        if(newArray) {
             setMockData(newArray);
         }
     }
@@ -58,10 +86,9 @@ function StudyHelperIndex() {
     return (
         <div id="studyHelper">
             <FlashCard activeTerm={mockData[activeTerm]} nextTerm={() => nextTerm()}/>
-            {/* <NewTerm mockDataArray={mockDataArray} addItem={(arr) => addItem(arr)}/> */}
-            <NewTerm addItem={(newArray) => addItem(newArray)}/>
+            <NewTerm addItem={(arr) => addItem(arr)}/>
             <p className="termList-sectionTitle">List of terms in this class ({mockData.length})</p>                
-            <ListOfTerms terms={mockData}/>
+            <TermList terms={mockData} />
         </div>
     );
 }

@@ -1,6 +1,5 @@
 function addItemToArray(array) {
     let titleInput = document.querySelector('.termList-title-input');
-    // let definitionInputs = document.querySelectorAll('.termList-definition-input');
     let backQuestion = document.querySelectorAll('.termList-definition-title-input');
     let backAnswer = document.querySelectorAll('.termList-definition-input');
 
@@ -38,57 +37,37 @@ function addItemToArray(array) {
     let oldArray = [...array];
 
     //extract value from question and answer nodes
-    let questions = []
-    let answers = []
-    backQuestion.forEach(function (question) {
-        questions.push(question.value);
-    })
+    let questions = [];
 
-    backAnswer.forEach(function (answer) {
-        answers.push(answer.value);
-    })
+    for(let i = 0; i < backAnswer.length; i++) {
+        // question Schema
+        questions.push({
+            id: i,
+            question: backQuestion[i].value,
+            answer: backAnswer[i].value,
+            accuracy: 0,
+        })
+        //clear fields
+        backQuestion[i].value = '';
+        backAnswer[i].value = '';
+    }
 
+    // card Schema
     let item = {
         id: array.length+1,
         termTitle: titleInput.value,
-        back: {
-            questions,
-            answers,
-        },
+        questions,
         accuracy: 0,
         priority: 0,
     }
+    //clear title field
+    titleInput.value = '';
 
     oldArray.push(item);
+
+    //clear input field
+
     return oldArray;
-    
-    // if (titleInput.value.length < 1) {
-    //     titleInput.classList.add('empty-input');
-    //     emptyInput = true;
-    // }
-    // if (definitionInput.value.length < 1) {
-    //     definitionInput.classList.add('empty-input');
-    //     return;
-    // }
-    // if (emptyInput) {
-    //     return;
-    // }
-    // mock schema
-    // let item = {
-    //     title: titleInput.value,
-    //     definition: definitionInput.value,
-    //     accuracy: 0,
-    //     priority: 0,
-    // };
-    // temporary: copy mock array and push item then set the state
-    // let tempArray = [...mockData];
-    // tempArray.push(item);
-    // setMockData(tempArray);
-    // Clear input fields to avoid accidental multiple submittion of same card
-    // titleInput.value = '';
-    // definitionInput.value = '';
-    // titleInput.classList.remove('empty-input');
-    // definitionInput.classList.remove('empty-input');
 }
 
 export default addItemToArray;

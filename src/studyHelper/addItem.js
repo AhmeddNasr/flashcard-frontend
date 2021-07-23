@@ -1,8 +1,10 @@
-function addItemToArray() {
+function addItemToArray(array) {
     let titleInput = document.querySelector('.termList-title-input');
-    let definitionInputs = document.querySelectorAll('.termList-definition-input');
-    // check empty value
+    // let definitionInputs = document.querySelectorAll('.termList-definition-input');
+    let backQuestion = document.querySelectorAll('.termList-definition-title-input');
+    let backAnswer = document.querySelectorAll('.termList-definition-input');
 
+    // check empty value
     function markAsEmpty (element, placeholder) {
         let oldPlaceHolder = element.placeholder;
         element.classList.add('empty-input');
@@ -20,30 +22,46 @@ function addItemToArray() {
         markAsEmpty(titleInput, 'Term can NOT be empty');
         return;
         
-        // check if definition is empty in the case of only one back
-    } else if (definitionInputs.length === 1) {
-        let definition = definitionInputs[0];
-        if (definition.value === '') {
-            markAsEmpty(definition, 'Definition can NOT be empty');
-            return;
-        }
-        // check if definitions (questions and answers) are empty in case of multiple backs
-    } else if (definitionInputs.length > 1) {
-        let backQuestion = document.querySelectorAll('.termList-definition-title-input');
-        let backAnswer = document.querySelectorAll('.termList-definition-input');
+        // check if definition is empty
+    } else {
         // loop over backs
         for (let i = 0; i < backQuestion.length; i++) {
             if (backQuestion[i].value === '') {
                 markAsEmpty(backQuestion[i], 'Please enter a question');
-                return;       
+                return;
             } else if (backAnswer[i].value === '') {
                 markAsEmpty(backAnswer[i], 'Please enter an answer');
                 return;
             }
         }
     }
+    let oldArray = [...array];
 
+    //extract value from question and answer nodes
+    let questions = []
+    let answers = []
+    backQuestion.forEach(function (question) {
+        questions.push(question.value);
+    })
 
+    backAnswer.forEach(function (answer) {
+        answers.push(answer.value);
+    })
+
+    let item = {
+        id: array.length+1,
+        termTitle: titleInput.value,
+        back: {
+            questions,
+            answers,
+        },
+        accuracy: 0,
+        priority: 0,
+    }
+
+    oldArray.push(item);
+    return oldArray;
+    
     // if (titleInput.value.length < 1) {
     //     titleInput.classList.add('empty-input');
     //     emptyInput = true;

@@ -47,15 +47,19 @@ function StudyHelperIndex() {
         setActiveTerm((activeTerm + 1)%mockData.length);
     }
 
-    const addItem = (mockDataArray) => {
-        mockDataArray = addItemToArray(mockDataArray);
-        // setMockData(mockDataArray);
+    const addItem = () => {
+        let newArray = addItemToArray(mockDataArray);
+        // check if error occured (when input is empty))
+        if(addItemToArray) {
+            setMockData(newArray);
+        }
     }
     
     return (
         <div id="studyHelper">
             <FlashCard activeTerm={mockData[activeTerm]} nextTerm={() => nextTerm()}/>
-            <NewTerm addItem={() => addItem(mockDataArray)}/>
+            {/* <NewTerm mockDataArray={mockDataArray} addItem={(arr) => addItem(arr)}/> */}
+            <NewTerm addItem={(newArray) => addItem(newArray)}/>
             <p className="termList-sectionTitle">List of terms in this class ({mockData.length})</p>                
             <ListOfTerms terms={mockData}/>
         </div>

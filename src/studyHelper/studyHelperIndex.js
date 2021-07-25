@@ -4,6 +4,7 @@ import TermList from "./TermList";
 import NewTerm from './NewTerm'
 import textareaAutoSize from './textareaAutoSize';
 import addItemToArray from './addItem';
+import generateFlashcards from './generateFlashcards';
 import "./styles/studyHelper.css";
 
 function StudyHelperIndex() {
@@ -25,7 +26,7 @@ function StudyHelperIndex() {
                 {
                     id: 2,
                     question: 'Question 2',
-                    answer: 'Answer 2',
+                    answer: 'Answer 2 - congue eu consequat ac felis donec et odio pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend',
                     accuracy: 0,
                 }],
                 accuracy: 0,
@@ -72,7 +73,7 @@ function StudyHelperIndex() {
     
     // cycle displayed term when 'I got it' or 'Study again' button is pressed
     const nextTerm = () => {
-        setActiveTerm((activeTerm + 1)%mockData.length);
+        setActiveTerm((activeTerm + 1)%flashcards.length);
     }
 
     const addItem = () => {
@@ -82,10 +83,12 @@ function StudyHelperIndex() {
             setMockData(newArray);
         }
     }
-    
+
+    let flashcards = generateFlashcards(mockData);
+
     return (
         <div id="studyHelper">
-            <FlashCard activeTerm={mockData[activeTerm]} nextTerm={() => nextTerm()}/>
+            <FlashCard flashcard={flashcards[activeTerm]} nextTerm={() => nextTerm()}/>
             <NewTerm addItem={(arr) => addItem(arr)}/>
             <p className="termList-sectionTitle">List of terms in this class ({mockData.length})</p>                
             <TermList terms={mockData} />

@@ -1,21 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
+import Card from './Card';
+
 function FlashCard(props) {
-    //props -> activeTerm and nextTerm()
-    const [isActive, setActive] = useState(false);
-    const handleClick = () => {
-        setActive(!isActive);
-    }
     return (
         <div id="flashcard">
             <i className="fas fa-ellipsis-v"></i>
-            <div id="flashcard-inner" onClick={handleClick}>
-                <p id="flashcard-title" className={isActive ? "active" : null}>
-                    {props.activeTerm.title}
-                </p>
-                <p id="flashcard-definition" className={!isActive? "active" : null}>
-                    {props.activeTerm.definition}
-                </p>
-            </div>
+            <Card flashcard={props.flashcard} />
             <div id="flashcard-controls">
                 <button className='flashcard-controls-button' onClick={() => props.nextTerm()}>I got it</button>
                 <button className='flashcard-controls-button' onClick={() => props.nextTerm()}>Study again</button>
@@ -26,3 +16,4 @@ function FlashCard(props) {
 }
 
 export default FlashCard;
+

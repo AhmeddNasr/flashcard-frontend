@@ -1,12 +1,3 @@
-:root {
-    /* --dark-background: #121212; */
-}
-
-body {
-    /* background: var(--dark-background); */
-    /* color: white; */
-}
-
 #studyHelper {
     padding: 20px;
     display: flex;
@@ -108,3 +99,6 @@ body {
     display: block !important;
 }
 
+.hidden {
+    display: none !important;
+}

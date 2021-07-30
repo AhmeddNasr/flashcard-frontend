@@ -3,14 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { BrowserRouter, Switch, Route } from "react-router-dom"
-import StudyHelperIndex from './studyHelper/StudyHelperIndex'
-
+import Index from './studyHelper/Index';
+import Folder from './studyHelper/Folder';
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={App} />
-        <Route exact path="/study" component={StudyHelperIndex}/>
+        <Route exact path="/study" component={Index}/>
+        <Route path="/study/folder/:folderID" component={Folder} />
       </Switch>
     </BrowserRouter>
   </React.StrictMode>,

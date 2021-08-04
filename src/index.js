@@ -5,19 +5,29 @@ import App from './App';
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 import Index from './studyHelper/Index';
 import Folder from './studyHelper/Folder';
+
+function checkAuthenticated() {
+  return false;
+}
+
+function goToLogin() {
+  return (
+    window.location.assign('http://localhost:8080/google')
+  )
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={App} />
-        <Route exact path="/study" component={Index}/>
+        {/* <Route exact path="/" component={Auth} /> */}
+        <Route exact path="/study">
+          {checkAuthenticated ? goToLogin : <Index />}
+        </Route>
         <Route path="/study/folder/:folderID" component={Folder} />
       </Switch>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

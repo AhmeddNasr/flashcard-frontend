@@ -4,6 +4,10 @@
     flex-direction: column;
 }
 
+.cry {
+    width: 100px;
+}
+
 #flashcard{
     margin: 0 auto;
     display: flex;

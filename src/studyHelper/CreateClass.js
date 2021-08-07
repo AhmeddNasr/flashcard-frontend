@@ -13,6 +13,13 @@ import "./styles/create-class.css";
 
 function CreateClassTermFields(props) {
   const [questionCount, setQuestionCount] = useState([1]);
+  if (questionCount.length !== props.count) {
+    let arr = [...questionCount];
+    while(arr.length !== props.count) {
+      arr.push(1);
+    }
+    setQuestionCount(arr);
+  }
   let cardFields = [];
   const handleChange = props.onChange;
   // setQuestionCount(0);
@@ -29,7 +36,7 @@ function CreateClassTermFields(props) {
               alignItems: "center",
             }}
           >
-            <h3 style={{ margin: "0px" }}>{`Term - ${i + 1}`}</h3>
+            <h3 style={{ margin: "0, 0, 4px, 0" }}>{`Term - ${i + 1}`}</h3>
             <IconButton tabIndex="-1" size="small">
               <DeleteIcon />
             </IconButton>
@@ -54,17 +61,12 @@ function CreateClassTermFields(props) {
             onClick={() => {
               let arr = questionCount;
               arr[i] = arr[i] + 1;
-              console.log(arr);
-              console.log(i);
-              setQuestionCount(arr);
-            }
-            }
+              setQuestionCount([...arr]);
+            }}
           >
             Add Another Question
           </Button>
         </Grid>
-        {/* TODO */}
-        {/* <Divider style={{height: '1px'}}/> */}
       </Grid>
     );
   }

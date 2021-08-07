@@ -53,11 +53,11 @@ function HandleAuthentication() {
   }
 }
 
-function goToLogin() {
-  return (
-    window.location.assign('http://localhost:8080/google')
-  )
-}
+// function goToLogin() {
+//   return (
+//     window.location.assign('http://localhost:8080/google')
+//   )
+// }
 
 ReactDOM.render(
   <React.StrictMode>

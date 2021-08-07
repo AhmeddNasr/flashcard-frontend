@@ -13,6 +13,7 @@ import "./styles/create-class.css";
 function CreateClassTermFields(props) {
   const [questionCount, setQuestionCount] = useState(1);
   let cardFields = [];
+  const handleChange = props.onChange;
   // setQuestionCount(0);
   for (let i = 0; i < props.count; i++) {
     cardFields.push(
@@ -30,14 +31,21 @@ function CreateClassTermFields(props) {
           </IconButton>
         </div>
         <TextField
+          name={`terms.term_name[${i}]`}
+          onChange={handleChange}
           variant="outlined"
           style={{ marginBottom: "12px" }}
           fullWidth
           label="Term Name"
           placeholder="e.g. World War 2"
         />
-        <CreateClassQuestionFields i={i} count={questionCount} />
-        <Divider />
+        <CreateClassQuestionFields
+          termIndex={i}
+          count={questionCount}
+          onChange={props.onChange}
+        />
+        {/* TODO */}
+        {/* <Divider style={{height: '1px'}}/> */}
       </Grid>
     );
   }
@@ -49,16 +57,20 @@ function CreateClassQuestionFields(props) {
   for (let i = 0; i < props.count; i++) {
     questionFields.push(
       <Grid container spacing={0} direction="column">
-        <Grid item key={`term-field-${props.i}-question-field-${props.count}`}>
+        <Grid item key={`term-field-${props.termIndex}-question-field-${props.count}`}>
           <TextField
+            name={`terms.questions[${props.termIndex}][${i}]`}
+            onChange={props.onChange}
             variant="outlined"
             fullWidth
             label="Question"
             placeholder="e.g. When did it start?"
           />
         </Grid>
-        <Grid item key={`term-field-${props.i}-answer-field-${props.count}`}>
+        <Grid item key={`term-field-${props.termIndex}-answer-field-${props.count}`}>
           <TextField
+            name={`terms.answers[${props.termIndex}][${i}]`}
+            onChange={props.onChange}
             variant="outlined"
             fullWidth
             label="Answer"
@@ -79,8 +91,13 @@ function CreateClass() {
     initialValues: {
       class_name: "",
       class_description: "",
-      terms: [],
-      questions: [[]],
+      // terms: [],
+
+      terms: {
+        term_name: [],
+        questions: [[]],
+        answers: [[]],
+      },
     },
     onSubmit: (values) => {
       setFormValues(JSON.stringify(values, null, 2));
@@ -101,24 +118,27 @@ function CreateClass() {
             <Grid item sm={12}>
               <TextField
                 onChange={formik.handleChange}
-                id="class_name"
                 name="class_name"
                 fullWidth
                 label="Class Name"
                 variant="outlined"
-                
               />
             </Grid>
             <Grid item sm={12}>
               <TextField
                 fullWidth
                 multiline
+                onChange={formik.handleChange}
+                name="class_description"
                 label="Class Description"
                 variant="outlined"
                 placeholder="Describe The Class"
               />
             </Grid>
-            <CreateClassTermFields count={termCount} />
+            <CreateClassTermFields
+              count={termCount}
+              onChange={formik.handleChange}
+            />
             <Grid item sm={12} align="center">
               <Button
                 onClick={() => setTermCount(termCount + 1)}

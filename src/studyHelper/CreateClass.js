@@ -4,12 +4,15 @@ import {
   Button,
   Grid,
   IconButton,
-  Divider,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@material-ui/core";
 import { useFormik } from "formik";
 import DeleteIcon from "@material-ui/icons/Delete";
 // import { white } from "@material-ui/core/colors";
 import "./styles/create-class.css";
+import * as Yup from "yup";
 
 function CreateClassTermFields(props) {
   const [questionCount, setQuestionCount] = useState([1]);
@@ -58,17 +61,19 @@ function CreateClassTermFields(props) {
             onChange={props.onChange}
           />
           {/* add a question button by increasing the questionCount at index of current term */}
-          <Button
-            variant="contained"
-            style={{ width: "100%" }}
-            onClick={() => {
-              let arr = questionCount;
-              arr[i] = arr[i] + 1;
-              setQuestionCount([...arr]);
-            }}
-          >
-            Add Another Question
-          </Button>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              style={{ width: "100%" }}
+              onClick={() => {
+                let arr = questionCount;
+                arr[i] = arr[i] + 1;
+                setQuestionCount([...arr]);
+              }}
+            >
+              Add Another Question
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     );
@@ -81,14 +86,15 @@ function CreateClassQuestionFields(props) {
   for (let i = 0; i < props.count; i++) {
     questionFields.push(
       // generate a question/answer field for every question the term has
-      <Grid key={`question-answer-group-field-${props.termIndex}-${i}`} item sm={12}>
+      <Grid
+        key={`question-answer-group-field-${props.termIndex}-${i}`}
+        item
+        sm={12}
+      >
         {/* spacing between questions and answers */}
         <Grid container spacing={2} direction="column">
           {/* question field */}
-          <Grid
-            item
-            key={`term-field-${props.termIndex}-question-field-${i}`}
-          >
+          <Grid item key={`term-field-${props.termIndex}-question-field-${i}`}>
             <TextField
               multiline
               name={`terms.questions[${props.termIndex}][${i}]`}
@@ -100,10 +106,7 @@ function CreateClassQuestionFields(props) {
             />
           </Grid>
           {/* answer field */}
-          <Grid
-            item
-            key={`term-field-${props.termIndex}-answer-field-${i}`}
-          >
+          <Grid item key={`term-field-${props.termIndex}-answer-field-${i}`}>
             <TextField
               multiline
               name={`terms.answers[${props.termIndex}][${i}]`}
@@ -125,13 +128,19 @@ function CreateClass() {
   const [termCount, setTermCount] = useState(1);
   const [formValues, setFormValues] = useState(null);
 
+  const FormSchema = Yup.object().shape({
+    class_name: Yup.string()
+      .min(3, "class name should contain 3 letters")
+      .required("class name can not be empty"),
+  });
+  //Formik setup
   const formik = useFormik({
     initialValues: {
       class_name: "",
       class_description: "",
       // terms: [],
-
       terms: {
+        //each index in term_name maps to an array at the same index in questions and answers
         term_name: [],
         questions: [[]],
         answers: [[]],
@@ -145,12 +154,12 @@ function CreateClass() {
   return (
     <div id="create-class">
       <div>
-        <h1>Create A New Class</h1>
+        <h1 style={{ alignText: "center" }}>Create A New Class</h1>
         <form
           onSubmit={formik.handleSubmit}
           noValidate
           autoComplete="off"
-          style={{ width: "300px" }}
+          style={{ width: "400px" }}
         >
           <Grid container spacing={3} direction="column">
             {/* class name text field */}
@@ -177,20 +186,30 @@ function CreateClass() {
               />
             </Grid>
             {/* term fields */}
-            <CreateClassTermFields
-              count={termCount}
-              onChange={formik.handleChange}
-            />
-            {/* Add term button */}
-            <Grid item sm={12} align="center">
-              <Button
-                onClick={() => setTermCount(termCount + 1)}
-                variant="contained"
-                style={{ borderRadius: "25px" }}
-              >
-                Add Term
-              </Button>
-            </Grid>
+            {/*  */}
+            <Accordion>
+              <AccordionSummary>Add Some Terms (Optional)</AccordionSummary>
+              {/*  */}
+              <AccordionDetails style={{padding: ' 0 20px'}}>
+                <div>
+                <CreateClassTermFields
+                  count={termCount}
+                  onChange={formik.handleChange}
+                />
+                {/* Add term button */}
+                <Grid item sm={12} align="center">
+                  <Button
+                    onClick={() => setTermCount(termCount + 1)}
+                    variant="contained"
+                    color="secondary"
+                    style={{ margin: "10px 0" }}
+                  >
+                    Add Another Term
+                  </Button>
+                </Grid>
+                </div>
+              </AccordionDetails>
+            </Accordion>
             {/* Submit button */}
             <Grid item sm={12} align="center">
               <Button type="submit" variant="contained">

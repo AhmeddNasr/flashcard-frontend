@@ -15,7 +15,7 @@ function CreateClassTermFields(props) {
   const [questionCount, setQuestionCount] = useState([1]);
   if (questionCount.length !== props.count) {
     let arr = [...questionCount];
-    while(arr.length !== props.count) {
+    while (arr.length !== props.count) {
       arr.push(1);
     }
     setQuestionCount(arr);
@@ -41,6 +41,7 @@ function CreateClassTermFields(props) {
               <DeleteIcon />
             </IconButton>
           </div>
+          {/* term name text field */}
           <TextField
             name={`terms.term_name[${i}]`}
             onChange={handleChange}
@@ -50,11 +51,13 @@ function CreateClassTermFields(props) {
             label="Term Name"
             placeholder="e.g. World War 2"
           />
+          {/* create question fields depending on questionCount state with the index of the current term */}
           <CreateClassQuestionFields
             termIndex={i}
             count={questionCount[i]}
             onChange={props.onChange}
           />
+          {/* add a question button by increasing the questionCount at index of current term */}
           <Button
             variant="contained"
             style={{ width: "100%" }}
@@ -77,12 +80,14 @@ function CreateClassQuestionFields(props) {
   let questionFields = [];
   for (let i = 0; i < props.count; i++) {
     questionFields.push(
-      <Grid item sm={12}>
+      // generate a question/answer field for every question the term has
+      <Grid key={`question-answer-group-field-${props.termIndex}-${i}`} item sm={12}>
         {/* spacing between questions and answers */}
         <Grid container spacing={2} direction="column">
+          {/* question field */}
           <Grid
             item
-            key={`term-field-${props.termIndex}-question-field-${props.count}`}
+            key={`term-field-${props.termIndex}-question-field-${i}`}
           >
             <TextField
               multiline
@@ -94,9 +99,10 @@ function CreateClassQuestionFields(props) {
               placeholder="e.g. When did it start?"
             />
           </Grid>
+          {/* answer field */}
           <Grid
             item
-            key={`term-field-${props.termIndex}-answer-field-${props.count}`}
+            key={`term-field-${props.termIndex}-answer-field-${i}`}
           >
             <TextField
               multiline
@@ -147,7 +153,8 @@ function CreateClass() {
           style={{ width: "300px" }}
         >
           <Grid container spacing={3} direction="column">
-            <Grid item sm={12}>
+            {/* class name text field */}
+            <Grid item sm={12} style={{ padding: "12px 0" }}>
               <TextField
                 onChange={formik.handleChange}
                 name="class_name"
@@ -157,7 +164,8 @@ function CreateClass() {
                 variant="outlined"
               />
             </Grid>
-            <Grid item sm={12}>
+            {/* class description text field */}
+            <Grid item sm={12} style={{ padding: "12px 0" }}>
               <TextField
                 fullWidth
                 multiline
@@ -168,10 +176,12 @@ function CreateClass() {
                 variant="outlined"
               />
             </Grid>
+            {/* term fields */}
             <CreateClassTermFields
               count={termCount}
               onChange={formik.handleChange}
             />
+            {/* Add term button */}
             <Grid item sm={12} align="center">
               <Button
                 onClick={() => setTermCount(termCount + 1)}
@@ -181,6 +191,7 @@ function CreateClass() {
                 Add Term
               </Button>
             </Grid>
+            {/* Submit button */}
             <Grid item sm={12} align="center">
               <Button type="submit" variant="contained">
                 Create Class

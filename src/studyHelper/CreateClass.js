@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { useFormik } from "formik";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 // import { white } from "@material-ui/core/colors";
 import "./styles/create-class.css";
 import * as Yup from "yup";
@@ -25,13 +26,12 @@ function CreateClassTermFields(props) {
   }
   let cardFields = [];
   const handleChange = props.onChange;
-  // setQuestionCount(0);
+  // create term and call on question fields
   for (let i = 0; i < props.count; i++) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     cardFields.push(
-      <Grid key={`term-field-${i}`} item sm={12}>
+      <Grid key={`term-field-${i}`} item xs={12}>
         {/* spacing between terms */}
-        <Grid container spacing={3}>
+        <Grid container direction="column" spacing={3}>
           <div
             style={{
               display: "flex",
@@ -49,7 +49,7 @@ function CreateClassTermFields(props) {
             name={`terms.term_name[${i}]`}
             onChange={handleChange}
             variant="outlined"
-            style={{ marginBottom: "12px" }}
+            style={{ marginBottom: "25px" }}
             fullWidth
             label="Term Name"
             placeholder="e.g. World War 2"
@@ -81,20 +81,27 @@ function CreateClassTermFields(props) {
   return cardFields;
 }
 
+//create question fields
 function CreateClassQuestionFields(props) {
   let questionFields = [];
   for (let i = 0; i < props.count; i++) {
     questionFields.push(
       // generate a question/answer field for every question the term has
       <Grid
+        style={{ padding: "0", marginTop: `${i === 1 ? "20px" : "0px"}` }}
+        align="center"
         key={`question-answer-group-field-${props.termIndex}-${i}`}
         item
         sm={12}
       >
         {/* spacing between questions and answers */}
-        <Grid container spacing={2} direction="column">
+        <Grid container direction="column">
           {/* question field */}
-          <Grid item key={`term-field-${props.termIndex}-question-field-${i}`}>
+          <Grid
+            item
+            xs={12}
+            key={`term-field-${props.termIndex}-question-field-${i}`}
+          >
             <TextField
               multiline
               name={`terms.questions[${props.termIndex}][${i}]`}
@@ -102,11 +109,20 @@ function CreateClassQuestionFields(props) {
               variant="outlined"
               fullWidth
               label={`Question #${i + 1}`}
-              placeholder="e.g. When did it start?"
+              placeholder={
+                i % 2 === 0
+                  ? "e.g. When did it start?"
+                  : "e.g. When did it end?"
+              }
             />
           </Grid>
           {/* answer field */}
-          <Grid item key={`term-field-${props.termIndex}-answer-field-${i}`}>
+          <Grid
+            align="center"
+            item
+            key={`term-field-${props.termIndex}-answer-field-${i}`}
+            style={{ marginTop: "10px" }}
+          >
             <TextField
               multiline
               name={`terms.answers[${props.termIndex}][${i}]`}
@@ -114,7 +130,9 @@ function CreateClassQuestionFields(props) {
               variant="outlined"
               fullWidth
               label={`Answer #${i + 1}`}
-              placeholder="e.g. September 1, 1939"
+              placeholder={
+                i % 2 === 0 ? "e.g. September 1, 1939" : "September 2, 1945"
+              }
             />
           </Grid>
         </Grid>
@@ -152,75 +170,82 @@ function CreateClass() {
   });
 
   return (
-    <div id="create-class">
-      <div>
-        <h1 style={{ alignText: "center" }}>Create A New Class</h1>
-        <form
-          onSubmit={formik.handleSubmit}
-          noValidate
-          autoComplete="off"
-          style={{ width: "400px" }}
-        >
-          <Grid container spacing={3} direction="column">
-            {/* class name text field */}
-            <Grid item sm={12} style={{ padding: "12px 0" }}>
-              <TextField
-                onChange={formik.handleChange}
-                name="class_name"
-                placeholder="e.g. History (Grade 12)"
-                fullWidth
-                label="Class Name"
-                variant="outlined"
-              />
-            </Grid>
-            {/* class description text field */}
-            <Grid item sm={12} style={{ padding: "12px 0" }}>
-              <TextField
-                fullWidth
-                multiline
-                onChange={formik.handleChange}
-                name="class_description"
-                placeholder="e.g. dates of major events"
-                label="Class Description"
-                variant="outlined"
-              />
-            </Grid>
-            {/* term fields */}
-            {/*  */}
-            <Accordion>
-              <AccordionSummary>Add Some Terms (Optional)</AccordionSummary>
+    <div
+      id="create-class"
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <h1 style={{ alignText: "center" }}>Create A New Class</h1>
+      <form
+        id="create-class-form"
+        onSubmit={formik.handleSubmit}
+        noValidate
+        autoComplete="off"
+        // style={{ width: "280px" }}
+      >
+        <Grid container spacing={3} direction="column" align="center">
+          {/* class name text field */}
+          <Grid item sm={12} style={{ padding: "12px 0" }}>
+            <TextField
+              className="create-class-class-info"
+              onChange={formik.handleChange}
+              name="class_name"
+              placeholder="e.g. History (Grade 12)"
+              maxWidth="100%"
+              label="Class Name"
+              variant="outlined"
+              fullWidth
+            />
+          </Grid>
+          {/* class description text field */}
+          <Grid item sm={12} style={{ padding: "12px 0" }}>
+            <TextField
+              className="create-class-class-info"
+              fullWidth
+              multiline
+              onChange={formik.handleChange}
+              name="class_description"
+              placeholder="e.g. dates of major events"
+              label="Class Description"
+              variant="outlined"
+            />
+          </Grid>
+          {/* term fields */}
+          {/*  */}
+          <Grid item sm={12} style={{ padding: "12px 0" }}>
+            <Accordion className="create-class-accordion">
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <h3 style={{ margin: "0px" }}>Add Some Terms (Optional)</h3>
+              </AccordionSummary>
               {/*  */}
-              <AccordionDetails style={{padding: ' 0 20px'}}>
-                <div>
-                <CreateClassTermFields
-                  count={termCount}
-                  onChange={formik.handleChange}
-                />
-                {/* Add term button */}
-                <Grid item sm={12} align="center">
-                  <Button
-                    onClick={() => setTermCount(termCount + 1)}
-                    variant="contained"
-                    color="secondary"
-                    style={{ margin: "10px 0" }}
-                  >
-                    Add Another Term
-                  </Button>
+              <AccordionDetails style={{ padding: " 0 20px" }}>
+                <Grid container justifyContent="center">
+                  <CreateClassTermFields
+                    count={termCount}
+                    onChange={formik.handleChange}
+                  />
+                  {/* Add term button */}
+                  <Grid item sm={12}>
+                    <Button
+                      onClick={() => setTermCount(termCount + 1)}
+                      variant="contained"
+                      color="secondary"
+                      style={{ margin: "10px 0" }}
+                    >
+                      Add Another Term
+                    </Button>
+                  </Grid>
                 </Grid>
-                </div>
               </AccordionDetails>
             </Accordion>
-            {/* Submit button */}
-            <Grid item sm={12} align="center">
-              <Button type="submit" variant="contained">
-                Create Class
-              </Button>
-            </Grid>
           </Grid>
-        </form>
-        <div></div>
-      </div>
-      {formValues}
+          {/* Submit button */}
+          <Grid item sm={12} align="center">
+            <Button type="submit" variant="contained">
+              Create Class
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
     </div>
   );
 }

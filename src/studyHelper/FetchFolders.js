@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import Loader from "react-loader-spinner";
-import GenerateFolders from './GenerateFolders'
+import GenerateFolders from "./GenerateFolders";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import "./styles/style.css";
 //TODO LAZY LOADING
 
@@ -38,10 +38,15 @@ function FetchFolders() {
     return (
       <div>
         <h4>It looks like you don't have any classes!</h4>
-        <Button variant="contained" color="primary">
-          <Link to="/study/create-new-class/" className="plain-link">
+        <Button
+          component={Link}
+          to={"/study/create-new-class"}
+          variant="contained"
+        >
+          Create your first class
+          {/* <Link to="/study/create-new-class/" className="plain-link">
             Create your first class
-          </Link>
+          </Link> */}
         </Button>
       </div>
     );
@@ -50,18 +55,13 @@ function FetchFolders() {
   if (folders[0] === true) {
     return (
       <Grid spacing={4} container direction="row" align="center">
-        <GenerateFolders folders={folders[1]}/>
+        <GenerateFolders folders={folders[1]} />
       </Grid>
     );
   } else {
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Loader
-          type="ThreeDots"
-          color="#00BFFF"
-          height={100}
-          width={100} //3 secs
-        />
+        <CircularProgress color="white" style={{ marginTop: "15%" }} />
       </div>
     );
   }

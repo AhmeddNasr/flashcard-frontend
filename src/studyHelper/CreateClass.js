@@ -8,42 +8,61 @@ import {
 } from "@material-ui/core";
 import { useFormik } from "formik";
 import DeleteIcon from "@material-ui/icons/Delete";
+// import { white } from "@material-ui/core/colors";
 import "./styles/create-class.css";
 
 function CreateClassTermFields(props) {
-  const [questionCount, setQuestionCount] = useState(1);
+  const [questionCount, setQuestionCount] = useState([1]);
   let cardFields = [];
   const handleChange = props.onChange;
   // setQuestionCount(0);
   for (let i = 0; i < props.count; i++) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     cardFields.push(
       <Grid key={`term-field-${i}`} item sm={12}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <h3 style={{ margin: "0px" }}>{`Term - ${i + 1}`}</h3>
-          <IconButton tabindex="-1" size="small">
-            <DeleteIcon />
-          </IconButton>
-        </div>
-        <TextField
-          name={`terms.term_name[${i}]`}
-          onChange={handleChange}
-          variant="outlined"
-          style={{ marginBottom: "12px" }}
-          fullWidth
-          label="Term Name"
-          placeholder="e.g. World War 2"
-        />
-        <CreateClassQuestionFields
-          termIndex={i}
-          count={questionCount}
-          onChange={props.onChange}
-        />
+        {/* spacing between terms */}
+        <Grid container spacing={3}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <h3 style={{ margin: "0px" }}>{`Term - ${i + 1}`}</h3>
+            <IconButton tabIndex="-1" size="small">
+              <DeleteIcon />
+            </IconButton>
+          </div>
+          <TextField
+            name={`terms.term_name[${i}]`}
+            onChange={handleChange}
+            variant="outlined"
+            style={{ marginBottom: "12px" }}
+            fullWidth
+            label="Term Name"
+            placeholder="e.g. World War 2"
+          />
+          <CreateClassQuestionFields
+            termIndex={i}
+            count={questionCount[i]}
+            onChange={props.onChange}
+          />
+          <Button
+            variant="contained"
+            style={{ width: "100%" }}
+            onClick={() => {
+              let arr = questionCount;
+              arr[i] = arr[i] + 1;
+              console.log(arr);
+              console.log(i);
+              setQuestionCount(arr);
+            }
+            }
+          >
+            Add Another Question
+          </Button>
+        </Grid>
         {/* TODO */}
         {/* <Divider style={{height: '1px'}}/> */}
       </Grid>
@@ -56,26 +75,37 @@ function CreateClassQuestionFields(props) {
   let questionFields = [];
   for (let i = 0; i < props.count; i++) {
     questionFields.push(
-      <Grid container spacing={0} direction="column">
-        <Grid item key={`term-field-${props.termIndex}-question-field-${props.count}`}>
-          <TextField
-            name={`terms.questions[${props.termIndex}][${i}]`}
-            onChange={props.onChange}
-            variant="outlined"
-            fullWidth
-            label="Question"
-            placeholder="e.g. When did it start?"
-          />
-        </Grid>
-        <Grid item key={`term-field-${props.termIndex}-answer-field-${props.count}`}>
-          <TextField
-            name={`terms.answers[${props.termIndex}][${i}]`}
-            onChange={props.onChange}
-            variant="outlined"
-            fullWidth
-            label="Answer"
-            placeholder="e.g. September 1, 1939"
-          />
+      <Grid item sm={12}>
+        {/* spacing between questions and answers */}
+        <Grid container spacing={2} direction="column">
+          <Grid
+            item
+            key={`term-field-${props.termIndex}-question-field-${props.count}`}
+          >
+            <TextField
+              multiline
+              name={`terms.questions[${props.termIndex}][${i}]`}
+              onChange={props.onChange}
+              variant="outlined"
+              fullWidth
+              label={`Question #${i + 1}`}
+              placeholder="e.g. When did it start?"
+            />
+          </Grid>
+          <Grid
+            item
+            key={`term-field-${props.termIndex}-answer-field-${props.count}`}
+          >
+            <TextField
+              multiline
+              name={`terms.answers[${props.termIndex}][${i}]`}
+              onChange={props.onChange}
+              variant="outlined"
+              fullWidth
+              label={`Answer #${i + 1}`}
+              placeholder="e.g. September 1, 1939"
+            />
+          </Grid>
         </Grid>
       </Grid>
     );
@@ -119,6 +149,7 @@ function CreateClass() {
               <TextField
                 onChange={formik.handleChange}
                 name="class_name"
+                placeholder="e.g. History (Grade 12)"
                 fullWidth
                 label="Class Name"
                 variant="outlined"
@@ -130,9 +161,9 @@ function CreateClass() {
                 multiline
                 onChange={formik.handleChange}
                 name="class_description"
+                placeholder="e.g. dates of major events"
                 label="Class Description"
                 variant="outlined"
-                placeholder="Describe The Class"
               />
             </Grid>
             <CreateClassTermFields
@@ -143,23 +174,21 @@ function CreateClass() {
               <Button
                 onClick={() => setTermCount(termCount + 1)}
                 variant="contained"
-                color="secondary"
                 style={{ borderRadius: "25px" }}
               >
                 Add Term
               </Button>
             </Grid>
             <Grid item sm={12} align="center">
-              <Button type="submit" variant="contained" color="primary">
+              <Button type="submit" variant="contained">
                 Create Class
               </Button>
             </Grid>
           </Grid>
         </form>
         <div></div>
-        hi
-        {formValues}
       </div>
+      {formValues}
     </div>
   );
 }

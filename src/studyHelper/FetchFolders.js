@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import GenerateFolders from "./GenerateFolders";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
 import "./styles/style.css";
 //TODO LAZY LOADING
 
@@ -62,8 +63,6 @@ function FetchFolders() {
       <Grid
         spacing={4}
         container
-        direction="row"
-        justifyContent="center"
         align="center"
       >
         <GenerateFolders folders={folders[1]} />

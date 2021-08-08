@@ -10,6 +10,8 @@ import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import ErrorPage from "./studyHelper/ErrorPage";
+import { AppBar, Button, Toolbar, IconButton } from "@material-ui/core";
+import {Menu} from "@material-ui/icons"
 function HandleAuthentication() {
   const [authenticationHandled, setAuthenticationHandled] = React.useState([
     false,
@@ -76,6 +78,21 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <AppBar position="sticky">
+        <Toolbar>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+          >
+            <Menu />
+          </IconButton>
+          <div variant="h6">
+            News
+          </div>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
       <Container maxWidth="lg">
         <HandleAuthentication />
       </Container>

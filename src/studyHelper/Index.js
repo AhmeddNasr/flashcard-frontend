@@ -5,7 +5,7 @@ import FetchFolders from "./FetchFolders";
 function Index() {
   return (
     <div>
-      <h1>My Classes</h1>
+      <h1 style={{fontSize: '2.5em'}}>My Classes</h1>
       <FetchFolders />
     </div>
   );

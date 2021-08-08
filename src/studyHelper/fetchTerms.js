@@ -1,10 +1,15 @@
 function fetchTerms(folderID, setMockData) {
-  console.log("hi");
   let terms = [];
   fetch(`http://localhost:8080/api/terms/${folderID}`, {
     credentials: "include",
   })
-    .then((result) => result.json())
+    .then((result) => {
+      if (result.ok) {
+        return result.json();
+      } else {
+        return window.location.href = "/error";
+      }
+    })
     .then((data) => {
       addToArray(data);
       setMockData(terms);

@@ -61,7 +61,7 @@ function CreateClassTermFields(props) {
             onChange={props.onChange}
           />
           {/* add a question button by increasing the questionCount at index of current term */}
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{padding: '12px 0'}}>
             <Button
               variant="contained"
               style={{ width: "100%" }}
@@ -88,7 +88,7 @@ function CreateClassQuestionFields(props) {
     questionFields.push(
       // generate a question/answer field for every question the term has
       <Grid
-        style={{ padding: "0", marginTop: `${i === 1 ? "20px" : "0px"}` }}
+        style={{ padding: "0", marginTop: `${(i < 1) ? "0px" : "20px"}` }}
         align="center"
         key={`question-answer-group-field-${props.termIndex}-${i}`}
         item
@@ -164,6 +164,7 @@ function CreateClass() {
         answers: [[]],
       },
     },
+    validationSchema:{FormSchema},
     onSubmit: (values) => {
       setFormValues(JSON.stringify(values, null, 2));
     },

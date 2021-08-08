@@ -11,20 +11,24 @@ function FetchFolders() {
   // eslint-disable-next-line
   const [folders, setFolders] = useState([false, []]);
   useEffect(() => {
-    fetch("http://localhost:8080/api/folders/87677", { credentials: "include" })
+    fetch("http://localhost:8080/api/folders/8777", { credentials: "include" })
       .then((result) => {
         if (result.ok) {
           return result.json();
+        } else {
+          window.location.href = "/error";
         }
       })
       .then((data) => {
         let folders = [];
         for (let i = 0; i < data.folders.length; i++) {
+          //TODO is this needed?
           let currentFolder = data.folders[i];
           folders.push({
             name: currentFolder.name,
             description: currentFolder.description,
-            id: currentFolder.folder_id,
+            folder_id: currentFolder.folder_id,
+            count: currentFolder.count,
           });
         }
         setFolders([true, folders]);
@@ -33,7 +37,8 @@ function FetchFolders() {
         console.log(err);
       });
   }, []);
-
+  //folders[0] => checks if the request was completed
+  //folders[1] => the folder response
   if (folders[0] === true && folders[1].length === 0) {
     return (
       <div>
@@ -54,7 +59,13 @@ function FetchFolders() {
 
   if (folders[0] === true) {
     return (
-      <Grid spacing={4} container direction="row" align="center">
+      <Grid
+        spacing={4}
+        container
+        direction="row"
+        justifyContent="center"
+        align="center"
+      >
         <GenerateFolders folders={folders[1]} />
       </Grid>
     );

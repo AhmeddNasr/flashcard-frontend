@@ -9,7 +9,7 @@ import CreateClass from "./studyHelper/CreateClass";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
-
+import ErrorPage from "./studyHelper/ErrorPage";
 function HandleAuthentication() {
   const [authenticationHandled, setAuthenticationHandled] = React.useState([
     false,
@@ -54,7 +54,8 @@ function HandleAuthentication() {
               path="/study/create-new-class"
               component={CreateClass}
             ></Route>
-            <Route path="/study/folder/:folderID" component={Folder} />
+            <Route path="/study/class/:folderID" component={Folder} />
+            <Route exact path="/error" component={ErrorPage} />
           </Switch>
         </BrowserRouter>
       );
@@ -66,8 +67,8 @@ const theme = createTheme({
   palette: {
     type: "dark",
     primary: {
-      main: '#fff',
-    }
+      main: "#fff",
+    },
   },
 });
 

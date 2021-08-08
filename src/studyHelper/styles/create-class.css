@@ -1,3 +1,18 @@
-#create-class{
-    margin: 0 10px;
+#create-class {
+  margin: 0 10px;
+}
+
+@media screen and (min-width: 430px) and (max-width: 599px) {
+  .classes{
+    width: 400px;
+  }
+}
+
+.classes {
+  height: 200px;
+}
+
+.classes:hover {
+  background-color: #393939b2;
+  cursor: pointer;
 }

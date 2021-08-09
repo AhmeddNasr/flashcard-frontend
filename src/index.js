@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import Index from "./studyHelper/Index";
 import Folder from "./studyHelper/Folder";
 import CreateClass from "./studyHelper/CreateClass";
@@ -10,8 +10,8 @@ import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import ErrorPage from "./studyHelper/ErrorPage";
-import { AppBar, Button, Toolbar, IconButton } from "@material-ui/core";
-import {Menu} from "@material-ui/icons"
+import { AppBar, Toolbar, IconButton, Typography } from "@material-ui/core";
+import { Menu, Info, AddBox, ExitToApp } from "@material-ui/icons";
 function HandleAuthentication() {
   const [authenticationHandled, setAuthenticationHandled] = React.useState([
     false,
@@ -48,17 +48,87 @@ function HandleAuthentication() {
     if (authenticationHandled[1]) {
       return (
         <BrowserRouter>
-          <Switch>
-            <Route exact path="/" component={App} />
-            <Route exact path="/study" component={Index}></Route>
-            <Route
-              exact
-              path="/study/create-new-class"
-              component={CreateClass}
-            ></Route>
-            <Route path="/study/class/:folderID" component={Folder} />
-            <Route exact path="/error" component={ErrorPage} />
-          </Switch>
+          <div>
+            {/* TODO automate generation of Links */}
+            <AppBar position="sticky">
+              <Toolbar>
+                <IconButton edge="start" color="inherit" aria-label="menu">
+                  <Menu />
+                </IconButton>
+                <Typography variant="h6">
+                  <Link to="/study">Home</Link>
+                </Typography>
+                <ul id="appbar-navigation-large" className="appbar-navigation">
+                  <li>
+                    <Link to="/study">
+                      <Typography variant="h6">My Classes</Typography>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/study/create-new-class">
+                      <Typography variant="h6">Create</Typography>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/about">
+                      <Typography variant="h6">About</Typography>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      onClick={() => {
+                        window.location.href = "http://localhost:8080/logout";
+                      }}
+                    >
+                      <Typography variant="h6">logout</Typography>
+                    </Link>
+                  </li>
+                </ul>
+
+                <ul id="appbar-navigation-small" className="appbar-navigation">
+                  <li style={{ color: "black" }}>
+                    <IconButton color="inherit">
+                      <Link to="/study/create-new-class">
+                        <AddBox />
+                      </Link>
+                    </IconButton>
+                  </li>
+                  <li>
+                    <IconButton color="inherit">
+                      <Link to="/about">
+                        <Info />
+                      </Link>
+                    </IconButton>
+                  </li>
+                  <li>
+                    <IconButton color="inherit">
+                      <Link
+                        onClick={() => {
+                          window.location.href = "http://localhost:8080/logout";
+                        }}
+                      >
+                        <ExitToApp />
+                      </Link>
+                    </IconButton>
+                  </li>
+                </ul>
+              </Toolbar>
+            </AppBar>
+
+            <Container maxWidth="lg">
+              <Switch>
+                <Route exact path="/" component={App} />
+                <Route exact path="/study" component={Index}></Route>
+                <Route
+                  exact
+                  path="/study/create-new-class"
+                  component={CreateClass}
+                ></Route>
+                <Route exact path="/study/class/:folderID" component={Folder} />
+                <Route path="/" component={ErrorPage} />
+              </Switch>
+            </Container>
+          </div>
         </BrowserRouter>
       );
     }
@@ -78,24 +148,7 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="sticky">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-          >
-            <Menu />
-          </IconButton>
-          <div variant="h6">
-            News
-          </div>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-      <Container maxWidth="lg">
-        <HandleAuthentication />
-      </Container>
+      <HandleAuthentication />
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")

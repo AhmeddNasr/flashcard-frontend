@@ -7,6 +7,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Divider,
 } from "@material-ui/core";
 import { Field, useFormik, FormikProvider, FieldArray } from "formik";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -21,68 +22,87 @@ function CreateClassTermFieldsBAK(props) {
   let formik = props.formik;
   return (
     // term array
-    <FieldArray
-      name="terms"
-      render={(arrayHelpers) => (
-        <React.Fragment>
-          {/* Term name array */}
-          {formik.values.terms.map((term, index) => (
-            <React.Fragment>
-              <Field key={`term-${index}`} name={`terms.${index}.term`} />
-              <FieldArray
-                name={`terms.${index}.questions`}
-                render={(arrayHelpers) => (
-                  <React.Fragment>
-                    {formik.values.terms[index].questions.map(
-                      (question, qIndex) => (
-                        // Alter question object of the term at index of index
-                        <div key={`question-${qIndex}-term-${index}`}>
-                          <Field
-                            name={`terms.${index}.questions.${qIndex}.question`}
-                          />
-                          <Field
-                            name={`terms.${index}.questions.${qIndex}.answer`}
-                          />
-                          {/* REMOVE BUTTON */}
-                          {/* If only one question exists don't render the button */}
-                          {formik.values.terms[index].questions.length ===
-                          1 ? null : (
-                            <Button
-                              onClick={() => {
-                                arrayHelpers.remove(qIndex);
-                              }}
-                            >
-                              Remove
-                            </Button>
-                          )}
-                        </div>
-                      )
-                    )}
+    <div>
+      <FieldArray
+        name="terms"
+        render={(arrayHelpers) => (
+          <React.Fragment>
+            {/* Term name array */}
+            {formik.values.terms.map((term, index) => (
+              <React.Fragment>
+                <div>
+                  <Field
+                    as={TextField}
+                    key={`term-${index}`}
+                    name={`terms.${index}.term`}
+                  />
+                  {formik.values.terms.length === 1 ? null : (
                     <Button
                       onClick={() => {
-                        arrayHelpers.push({});
+                        arrayHelpers.remove(index);
                       }}
                     >
-                      Add Question
+                      Remove Term
                     </Button>
-                  </React.Fragment>
-                )}
-              />
-            </React.Fragment>
-          ))}
-          <Button
-            onClick={() => {
-              arrayHelpers.push({
-                term: "",
-                questions: [""],
-              });
-            }}
-          >
-            Add Term
-          </Button>
-        </React.Fragment>
-      )}
-    />
+                  )}
+                </div>
+                <FieldArray
+                  name={`terms.${index}.questions`}
+                  render={(arrayHelpers) => (
+                    <React.Fragment>
+                      {formik.values.terms[index].questions.map(
+                        (question, qIndex) => (
+                          // Alter question object of the term at index of index
+                          <div key={`question-${qIndex}-term-${index}`}>
+                            <Field
+                              as={TextField}
+                              name={`terms.${index}.questions.${qIndex}.question`}
+                            />
+                            <Field
+                              as={TextField}
+                              name={`terms.${index}.questions.${qIndex}.answer`}
+                            />
+                            {/* REMOVE BUTTON */}
+                            {/* If only one question exists don't render the button */}
+                            {formik.values.terms[index].questions.length ===
+                            1 ? null : (
+                              <Button
+                                onClick={() => {
+                                  arrayHelpers.remove(qIndex);
+                                }}
+                              >
+                                Remove
+                              </Button>
+                            )}
+                          </div>
+                        )
+                      )}
+                      <Button
+                        onClick={() => {
+                          arrayHelpers.push({});
+                        }}
+                      >
+                        Add Question
+                      </Button>
+                    </React.Fragment>
+                  )}
+                />
+              </React.Fragment>
+            ))}
+            <Button
+              onClick={() => {
+                arrayHelpers.push({
+                  term: "",
+                  questions: [""],
+                });
+              }}
+            >
+              Add Term
+            </Button>
+          </React.Fragment>
+        )}
+      />
+    </div>
   );
 }
 
@@ -225,30 +245,34 @@ function handleSubmit(values) {
     .then((data) => console.log(data))
     .catch((err) => console.log(err));
 }
-// function cleanBody(values) {
-//   for (let i = 0; i < values.questions.length; i++) {}
-// }
-
-// function validateBody(values) {
-//   let isBodyFilledCorrectly = true;
-//   //for each term
-//   for (let i = 0; i < values.terms.length; i++) {
-//     //if none of the values are filled
-//     if (values.terms[i].length !== 0 && ) {
-//       return;
-//     }
-//   }
-// }
-
 function CreateClass() {
   const [termCount, setTermCount] = useState(1);
   // eslint-disable-next-line
   const [formValues, setFormValues] = useState(null);
 
+  function isValidQuestionAnswer (message) {
+    return this.test("isValidQuestionAnswer", message, function (value) {
+      const { path, createError } = this;
+      console.log(path);
+      return false;
+    });
+  };
+  Yup.addMethod(Yup.mixed, "isValidQuestionAnswer", isValidQuestionAnswer);
+
   const FormSchema = Yup.object().shape({
     class_name: Yup.string()
       .min(3, "Class Name Is Too Short!")
+      .max(19, "Too Long")
       .required("class name can not be empty"),
+    class_description: Yup.string().max(200, "Too Long! (Max 200 Character)"),
+    terms: Yup.array().of(
+      Yup.object().shape({
+        term: Yup.string().min(5, "FUCK"),
+        questions: Yup.array().of(Yup.object().shape({
+          question: Yup.mixed().isValidQuestionAnswer()
+        })),
+      })
+    ),
   });
   //Formik setup
   const formik = useFormik({
@@ -308,7 +332,9 @@ function CreateClass() {
                 variant="outlined"
                 fullWidth
               />
-              <div>{formik.errors.class_name}</div>
+              {formik.errors.class_name && formik.touched.class_name ? (
+                <div>{formik.errors.class_name}</div>
+              ) : null}
             </Grid>
             {/* class description text field */}
             <Grid item sm={12} style={{ padding: "12px 0" }}>
@@ -362,6 +388,8 @@ function CreateClass() {
             </Grid>
           </Grid>
         </form>
+        <pre>{JSON.stringify(formik.errors, null, 2, 0)}</pre>
+        <Divider width="100%"/>
         <pre>{JSON.stringify(formik.values, null, 2, 0)}</pre>
       </FormikProvider>
     </div>

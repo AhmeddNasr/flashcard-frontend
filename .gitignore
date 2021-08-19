@@ -99,3 +99,4 @@ yarn-debug.log*
 yarn-error.log*
 src/Auth.js
 TODO
+src/studyHelper/removed.js

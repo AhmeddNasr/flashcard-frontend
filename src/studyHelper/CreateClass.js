@@ -9,7 +9,7 @@ import {
   AccordionDetails,
   Divider,
 } from "@material-ui/core";
-import { Field, useFormik, FormikProvider, FieldArray } from "formik";
+import { Field, useFormik, FormikProvider, FieldArray, useField } from "formik";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 // import { white } from "@material-ui/core/colors";
@@ -22,19 +22,36 @@ function CreateClassTermFieldsBAK(props) {
   let formik = props.formik;
   return (
     // term array
-    <div>
-      <FieldArray
-        name="terms"
-        render={(arrayHelpers) => (
-          <React.Fragment>
-            {/* Term name array */}
-            {formik.values.terms.map((term, index) => (
-              <React.Fragment>
-                <div>
+    <FieldArray
+      name="terms"
+      render={(arrayHelpers) => (
+        <React.Fragment>
+          {/* Term name array */}
+          {formik.values.terms.map((term, index) => {
+            return (
+              <Grid key={`term-field-${index}`} item xs={12}>
+                <Grid container direction="column" spacing={3}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <h3 style={{ margin: "0, 0, 4px, 0" }}>{`Term - ${
+                      index + 1
+                    }`}</h3>
+                  </div>
                   <Field
                     as={TextField}
                     key={`term-${index}`}
                     name={`terms.${index}.term`}
+                    multiline
+                    fullWidth
+                    variant="outlined"
+                    label="Term Name"
+                    placeholder="e.g. World War 2"
+                    style={{ marginBottom: "25px" }}
                   />
                   {formik.values.terms.length === 1 ? null : (
                     <Button
@@ -45,195 +62,120 @@ function CreateClassTermFieldsBAK(props) {
                       Remove Term
                     </Button>
                   )}
-                </div>
-                <FieldArray
-                  name={`terms.${index}.questions`}
-                  render={(arrayHelpers) => (
-                    <React.Fragment>
-                      {formik.values.terms[index].questions.map(
-                        (question, qIndex) => (
-                          // Alter question object of the term at index of index
-                          <div key={`question-${qIndex}-term-${index}`}>
-                            <Field
-                              as={TextField}
-                              name={`terms.${index}.questions.${qIndex}.question`}
-                            />
-                            <Field
-                              as={TextField}
-                              name={`terms.${index}.questions.${qIndex}.answer`}
-                            />
-                            {/* REMOVE BUTTON */}
-                            {/* If only one question exists don't render the button */}
-                            {formik.values.terms[index].questions.length ===
-                            1 ? null : (
-                              <Button
-                                onClick={() => {
-                                  arrayHelpers.remove(qIndex);
+                  {/* Questions and answer */}
+                  <FieldArray
+                    name={`terms.${index}.questions`}
+                    render={(arrayHelpers) => (
+                      <React.Fragment>
+                        {formik.values.terms[index].questions.map(
+                          (question, qIndex) => {
+                            return (
+                              // Alter question object of the term at index of index
+                              <Grid
+                                item
+                                sm={12}
+                                align="center"
+                                style={{
+                                  padding: "0",
+                                  marginTop: `${qIndex < 1 ? "0px" : "20px"}`,
                                 }}
+                                key={`question-${qIndex}-term-${index}`}
                               >
-                                Remove
-                              </Button>
-                            )}
-                          </div>
-                        )
-                      )}
-                      <Button
-                        onClick={() => {
-                          arrayHelpers.push({});
-                        }}
-                      >
-                        Add Question
-                      </Button>
-                    </React.Fragment>
-                  )}
-                />
-              </React.Fragment>
-            ))}
-            <Button
-              onClick={() => {
-                arrayHelpers.push({
-                  term: "",
-                  questions: [""],
-                });
-              }}
-            >
-              Add Term
-            </Button>
-          </React.Fragment>
-        )}
-      />
-    </div>
+                                <Grid container direction="column">
+                                  <Grid item xs={12} />
+                                  <Field
+                                    // error = {formik.errors.terms[index].questions[qIndex].question ? true : false}
+                                    as={TextField}
+                                    name={`terms.${index}.questions.${qIndex}.question`}
+                                    disabled={
+                                      formik.values.terms[index].term
+                                        ? false
+                                        : true
+                                    }
+                                    fullWidth
+                                    multiline
+                                    variant="outlined"
+                                    placeholder={
+                                      qIndex % 2 === 0
+                                      ? "e.g. When did it start"
+                                      : "e.g. When did it end"
+                                    }
+                                    label={`Question ${qIndex + 1}`}
+                                  />
+                                </Grid>
+                                <Grid
+                                  item
+                                  align="center"
+                                  style={{ marginTop: "10px" }}
+                                >
+                                  <Field
+                                    as={TextField}
+                                    name={`terms.${index}.questions.${qIndex}.answer`}
+                                    disabled={
+                                      formik.values.terms[index].term
+                                        ? false
+                                        : true
+                                    }
+                                    fullWidth
+                                    multiline
+                                    variant="outlined"
+                                    label={`Answer ${qIndex + 1}`}
+                                    placeholder={qIndex % 2 === 0 
+                                    ? "e.g. September 1, 1939"
+                                    : "September 2, 1945"
+                                    }
+                                  />
+                                </Grid>
+                                {/* REMOVE BUTTON */}
+                                {/* If only one question exists don't render the button */}
+                                {formik.values.terms[index].questions.length ===
+                                1 ? null : (
+                                  <Button
+                                    onClick={() => {
+                                      arrayHelpers.remove(qIndex);
+                                    }}
+                                  >
+                                    Remove
+                                  </Button>
+                                )}
+                              </Grid>
+                            );
+                          }
+                        )}
+                        <Button style={{marginBottom: "15px"}} variant="contained" color="primary"
+                          onClick={() => {
+                            arrayHelpers.push({ question: "", answer: "" });
+                          }}
+                        >
+                          Add Question
+                        </Button>
+                      </React.Fragment>
+                    )}
+                  />
+                </Grid>
+              </Grid>
+            );
+          })}
+          <Button
+          variant="contained"
+          color="secondary"
+          style={{ margin: "10px 0" }}
+            onClick={() => {
+              arrayHelpers.push({
+                term: "",
+                questions: [""],
+              });
+            }}
+          >
+            Add Another Term
+          </Button>
+        </React.Fragment>
+      )}
+    />
   );
 }
 
-function CreateClassTermFields(props) {
-  const [questionCount, setQuestionCount] = useState([1]);
-  if (questionCount.length !== props.count) {
-    let arr = [...questionCount];
-    while (arr.length !== props.count) {
-      arr.push(1);
-    }
-    setQuestionCount(arr);
-  }
-  let cardFields = [];
-  const handleChange = props.onChange;
-  // create term and call on question fields
-  for (let i = 0; i < props.count; i++) {
-    cardFields.push(
-      <Grid key={`term-field-${i}`} item xs={12}>
-        {/* spacing between terms */}
-        <Grid container direction="column" spacing={3}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <h3 style={{ margin: "0, 0, 4px, 0" }}>{`Term - ${i + 1}`}</h3>
-            <IconButton tabIndex="-1" size="small">
-              <DeleteIcon />
-            </IconButton>
-          </div>
-          {/* term name text field */}
-          <Field
-            as={TextField}
-            name={`terms.term_name[${i}]`}
-            // onChange={handleChange}
-            variant="outlined"
-            style={{ marginBottom: "25px" }}
-            fullWidth
-            label="Term Name"
-            placeholder="e.g. World War 2"
-          />
-          {/* create question fields depending on questionCount state with the index of the current term */}
-          <CreateClassQuestionFields
-            termIndex={i}
-            count={questionCount[i]}
-            onChange={props.onChange}
-          />
-          {/* add a question button by increasing the questionCount at index of current term */}
-          <Grid item xs={12} style={{ padding: "12px 0" }}>
-            <Button
-              variant="contained"
-              style={{ width: "100%" }}
-              onClick={() => {
-                let arr = questionCount;
-                arr[i] = arr[i] + 1;
-                setQuestionCount([...arr]);
-              }}
-            >
-              Add Another Question
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
-    );
-  }
-  return cardFields;
-}
-//create question fields
-function CreateClassQuestionFields(props) {
-  let questionFields = [];
-  for (let i = 0; i < props.count; i++) {
-    questionFields.push(
-      // generate a question/answer field for every question the term has
-      <Grid
-        style={{ padding: "0", marginTop: `${i < 1 ? "0px" : "20px"}` }}
-        align="center"
-        key={`question-answer-group-field-${props.termIndex}-${i}`}
-        item
-        sm={12}
-      >
-        {/* spacing between questions and answers */}
-        <Grid container direction="column">
-          {/* question field */}
-          <Grid
-            item
-            xs={12}
-            key={`term-field-${props.termIndex}-question-field-${i}`}
-          >
-            <Field
-              as={TextField}
-              multiline
-              name={`terms.questions[${props.termIndex}][${i}]`}
-              // onChange={props.onChange}
-              variant="outlined"
-              fullWidth
-              label={`Question #${i + 1}`}
-              placeholder={
-                i % 2 === 0
-                  ? "e.g. When did it start?"
-                  : "e.g. When did it end?"
-              }
-            />
-          </Grid>
-          {/* answer field */}
-          <Grid
-            align="center"
-            item
-            key={`term-field-${props.termIndex}-answer-field-${i}`}
-            style={{ marginTop: "10px" }}
-          >
-            <Field
-              as={TextField}
-              multiline
-              name={`terms.answers[${props.termIndex}][${i}]`}
-              onChange={props.onChange}
-              variant="outlined"
-              fullWidth
-              label={`Answer #${i + 1}`}
-              placeholder={
-                i % 2 === 0 ? "e.g. September 1, 1939" : "September 2, 1945"
-              }
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-    );
-  }
-  return questionFields;
-}
+
 //submit form
 function handleSubmit(values) {
   fetch("http://localhost:8080/api/folders/8777", {
@@ -250,32 +192,58 @@ function CreateClass() {
   // eslint-disable-next-line
   const [formValues, setFormValues] = useState(null);
 
-  function isValidQuestionAnswer (message) {
+  // TODO custom textField
+  // const MyTextField = ({placeholder, ...props}) => {
+  //   const [field, meta] = useField(props);
+  //   const errorText = meta.error && meta.touched ? meta.error : ''
+  //   return (
+  //     <TextField
+  //       placeholder = {placeholder}
+  //       helperText = {errorText}
+  //       {...field}
+  //     />
+
+  //   )
+  // }
+
+  function isValidQuestionAnswer(message) {
     return this.test("isValidQuestionAnswer", message, function (value) {
       const { path, createError } = this;
-      console.log(path);
-      return false;
+      if (value.term) {
+        //TODO check both answer and question at the same time
+        for (let i = 0; i < value.questions.length; i++) {
+          let currentQuestion = `${path}.questions[${i}]`;
+          if (!value.questions[i].question) {
+            return createError({
+              path: `${currentQuestion}.question`,
+              message: "Question can not be empty",
+            });
+          }
+          if (!value.questions[i].answer) {
+            return createError({
+              path: `${currentQuestion}.answer`,
+              message: "Answer can not be empty",
+            });
+          }
+        }
+      }
+      return true;
     });
-  };
-  Yup.addMethod(Yup.mixed, "isValidQuestionAnswer", isValidQuestionAnswer);
+  }
+  Yup.addMethod(Yup.object, "isValidQuestionAnswer", isValidQuestionAnswer);
 
   const FormSchema = Yup.object().shape({
     class_name: Yup.string()
+      .trim()
       .min(3, "Class Name Is Too Short!")
       .max(19, "Too Long")
       .required("class name can not be empty"),
     class_description: Yup.string().max(200, "Too Long! (Max 200 Character)"),
-    terms: Yup.array().of(
-      Yup.object().shape({
-        term: Yup.string().min(5, "FUCK"),
-        questions: Yup.array().of(Yup.object().shape({
-          question: Yup.mixed().isValidQuestionAnswer()
-        })),
-      })
-    ),
+    terms: Yup.array().of(Yup.object().isValidQuestionAnswer()),
   });
   //Formik setup
   const formik = useFormik({
+    validateOnChange: false,
     initialValues: {
       class_name: "",
       class_description: "",
@@ -283,15 +251,9 @@ function CreateClass() {
       terms: [
         {
           term: "",
-          questions: [""],
+          questions: [{ question: "", answer: "" }],
         },
       ],
-      //  {
-      //each index in term_name maps to an array at the same index in questions and answers
-      // term_name: [''],
-      // questions: [['']],
-      // answers: [['']],
-      // },
     },
     validationSchema: FormSchema,
     onSubmit: (values) => {
@@ -318,11 +280,17 @@ function CreateClass() {
             <Grid item sm={12} style={{ padding: "12px 0" }}>
               <Field
                 as={TextField}
-                className={`create-class-class-info ${
+                className={"create-class-class-info"}
+                helperText={
                   formik.errors.class_name && formik.touched.class_name
-                    ? "error"
-                    : ""
-                }`}
+                    ? formik.errors.class_name
+                    : null
+                }
+                error={
+                  formik.errors.class_name && formik.touched.class_name
+                    ? true
+                    : false
+                }
                 // onChange={formik.handleChange}
                 // onBlur={formik.handleBlur}
                 name="class_name"
@@ -332,15 +300,24 @@ function CreateClass() {
                 variant="outlined"
                 fullWidth
               />
-              {formik.errors.class_name && formik.touched.class_name ? (
-                <div>{formik.errors.class_name}</div>
-              ) : null}
             </Grid>
             {/* class description text field */}
             <Grid item sm={12} style={{ padding: "12px 0" }}>
               <Field
                 as={TextField}
                 className="create-class-class-info"
+                helperText={
+                  formik.errors.class_description &&
+                  formik.touched.class_description
+                    ? formik.errors.class_description
+                    : null
+                }
+                error={
+                  formik.errors.class_description &&
+                  formik.touched.class_description
+                    ? true
+                    : false
+                }
                 fullWidth
                 multiline
                 // onChange={formik.handleChange}
@@ -351,29 +328,24 @@ function CreateClass() {
               />
             </Grid>
             {/* term fields */}
-            {/*  */}
             <Grid item sm={12} style={{ padding: "12px 0" }}>
               <Accordion className="create-class-accordion">
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <h3 style={{ margin: "0px" }}>Add Some Terms (Optional)</h3>
                 </AccordionSummary>
-                {/*  */}
                 <AccordionDetails style={{ padding: " 0 20px" }}>
                   <Grid container justifyContent="center">
-                    {/* <CreateClassTermFields
-                      count={termCount}
-                      onChange={formik.handleChange}
-                    /> */}
+                    <CreateClassTermFieldsBAK formik={formik} />
                     {/* Add term button */}
                     <Grid item sm={12}>
-                      <Button
+                      {/* <Button
                         onClick={() => setTermCount(termCount + 1)}
                         variant="contained"
                         color="secondary"
                         style={{ margin: "10px 0" }}
                       >
                         Add Another Term
-                      </Button>
+                      </Button> */}
                     </Grid>
                   </Grid>
                 </AccordionDetails>
@@ -384,13 +356,13 @@ function CreateClass() {
               <Button type="submit" variant="contained">
                 Create Class
               </Button>
-              <CreateClassTermFieldsBAK formik={formik} />
+              {/* <CreateClassTermFieldsBAK formik={formik} /> */}
             </Grid>
           </Grid>
         </form>
-        <pre>{JSON.stringify(formik.errors, null, 2, 0)}</pre>
-        <Divider width="100%"/>
-        <pre>{JSON.stringify(formik.values, null, 2, 0)}</pre>
+        {/* <pre>{JSON.stringify(formik.errors, null, 2, 0)}</pre>
+        <Divider width="100%" />
+        <pre>{JSON.stringify(formik.values, null, 2, 0)}</pre> */}
       </FormikProvider>
     </div>
   );

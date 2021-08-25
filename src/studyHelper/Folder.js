@@ -61,7 +61,7 @@ function Folder(props) {
   //If folder is empty
   return (
     <div>
-      <h1>It looks like you have any terms</h1>
+      <h1>It looks like this class is empty!</h1>
       <Button
         component={Link}
         to={"/study/create-new-class"}

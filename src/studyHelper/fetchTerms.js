@@ -7,12 +7,16 @@ function fetchTerms(folderID, setMockData) {
       if (result.ok) {
         return result.json();
       } else {
-        return window.location.href = "/error";
+        return (window.location.href = "/error");
       }
     })
     .then((data) => {
-      addToArray(data);
-      setMockData(terms);
+      if (data.length > 0) {
+        addToArray(data);
+        setMockData(terms);
+      } else {
+        setMockData([])
+      }
     })
     .catch((err) => {
       console.log(err);

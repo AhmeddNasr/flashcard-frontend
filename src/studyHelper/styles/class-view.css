@@ -1,0 +1,15 @@
+.class-view-title-search {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 600px) {
+  .class-view-title-search {
+    flex-direction: column;
+  }
+
+  .class-view-title-search > h1{
+    padding-bottom: 30px;
+  }
+}

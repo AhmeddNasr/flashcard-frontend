@@ -1,0 +1,31 @@
+.class-view-title-search {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 600px) {
+  .class-view-title-search {
+    flex-direction: column;
+  }
+
+  .class-view-title-search > h1{
+    padding-bottom: 30px;
+  }
+}
+
+#flashcard:hover {
+  cursor: pointer;
+}
+
+.flashcard-control {
+  opacity: 50%;
+  margin: 0 10px;
+  /* box-sizing: border-box !important;
+  -webkit-box-sizing: border-box !important; */
+}
+
+.flashcard-control:hover {
+  opacity: 100%;
+  cursor: pointer;
+}

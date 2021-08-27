@@ -12,6 +12,8 @@ function FetchFolders() {
   // eslint-disable-next-line
   const [folders, setFolders] = useState([false, []]);
   useEffect(() => {
+    //TODO replace 8777 with ${id}
+    //empty user 908858
     fetch("http://localhost:8080/api/folders/8777", { credentials: "include" })
       .then((result) => {
         if (result.ok) {
@@ -43,16 +45,15 @@ function FetchFolders() {
   if (folders[0] === true && folders[1].length === 0) {
     return (
       <div>
+        <h1 style={{fontSize: '2.5em'}}>My Classes</h1>
         <h4>It looks like you don't have any classes!</h4>
         <Button
           component={Link}
           to={"/study/create-new-class"}
           variant="contained"
+          color="secondary"
         >
           Create your first class
-          {/* <Link to="/study/create-new-class/" className="plain-link">
-            Create your first class
-          </Link> */}
         </Button>
       </div>
     );

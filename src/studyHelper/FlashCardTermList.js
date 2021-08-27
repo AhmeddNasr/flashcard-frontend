@@ -7,12 +7,21 @@ function FlashCardTermList(props) {
   //TODO change true to user preference
   const [cardFront, setCardFront] = useState(true);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
+  //prevent user from accidentally going to the end of cards by pressing left arrow on activeCardIndex 0
+  const [buffer, setBuffer] = useState(0);
+
+  //TODO
+  // const [isKeyBeingHeldDown, setIsKeyBeingHeldDown] = useState(false);
 
   const toggleCardFront = () => {
     setCardFront(!cardFront);
   };
 
   const handleSpaceBar = (event) => {
+    if (activeCardIndex === props.flashCards.length) {
+      event.preventDefault();
+      return setActiveCardIndex(0);
+    }
     if (event.key === " " && event.target === document.body) {
       event.preventDefault();
       toggleCardFront();
@@ -20,11 +29,14 @@ function FlashCardTermList(props) {
   };
 
   const incrementActiveCardIndex = () => {
-    if (activeCardIndex !== props.flashCards.length - 1) {
+    if (activeCardIndex !== props.flashCards.length) {
       setActiveCardIndex(activeCardIndex + 1);
-      //TODO change true to user preference
-      setCardFront(true);
+    } else {
+      //go back to the beginning when end is reached
+      setActiveCardIndex(0);
     }
+    //TODO change true to user preference
+    setCardFront(true);
   };
 
   const decrementActiveCardIndex = () => {
@@ -32,6 +44,12 @@ function FlashCardTermList(props) {
       setActiveCardIndex(activeCardIndex - 1);
       //TODO change true to user preference
       setCardFront(true);
+    } else {
+      if (buffer === 0) {
+        setBuffer(1);
+      } else {
+        setActiveCardIndex(props.flashCards.length-1);
+      }
     }
   };
 
@@ -53,7 +71,7 @@ function FlashCardTermList(props) {
       window.removeEventListener("keydown", handleArrowKeys);
     };
     // eslint-disable-next-line
-  }, [cardFront, activeCardIndex]);
+  }, [cardFront, activeCardIndex, buffer]);
 
   return (
     <div>
@@ -65,6 +83,7 @@ function FlashCardTermList(props) {
           nextTerm={() => props.nextTerm()}
           cardFront={cardFront}
           toggleCardFront={() => toggleCardFront()}
+          increment={() => incrementActiveCardIndex()}
         />
         <FlashCardControls
           increment={() => incrementActiveCardIndex()}

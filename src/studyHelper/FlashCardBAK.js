@@ -22,7 +22,11 @@ function FlashCardBAK(props) {
     <Card
       id="flashcard"
       onClick={() => {
-        props.toggleCardFront();
+        if (props.cardCount === props.activeCardIndex) {
+          props.increment();
+        } else {
+          props.toggleCardFront();
+        }
       }}
       style={{
         maxWidth: "700px",
@@ -42,6 +46,18 @@ function FlashCardBAK(props) {
         }}
       >
         {(() => {
+          // if user reached end of flashcards and tried to go to the next flashcard
+          if (props.cardCount === props.activeCardIndex) {
+            return (
+              <React.Fragment>
+                <CardHeader title="You are all done!" />
+                <Button variant="contained" onClick={() => props.increment()}>
+                  Restart
+                </Button>
+              </React.Fragment>
+            );
+          }
+          //show the front of the card
           if (cardFront) {
             return (
               <React.Fragment>
@@ -51,24 +67,43 @@ function FlashCardBAK(props) {
                 <div>{currentFlashCard.question}</div>
               </React.Fragment>
             );
-          } else {
-            return (
-              <p
-                style={{
-                  overflow: "auto",
-                  wordBreak: "break-word",
-                  hyphens: "auto",
-                }}
-              >
-                {currentFlashCard.answer}
-              </p>
-            );
           }
+          //else show back of the card
+          return (
+            <p
+              style={{
+                overflow: "auto",
+                wordBreak: "break-word",
+                hyphens: "auto",
+              }}
+            >
+              {currentFlashCard.answer}
+            </p>
+          );
         })()}
       </CardContent>
       <CardActions style={{ height: "40px" }}>
-        <div style={{ display: "flex", justifyContent: "center", width: '100%' }}>
-          {props.activeCardIndex + 1} / {props.cardCount}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          {(() => {
+            if (props.cardCount === props.activeCardIndex) {
+              return (
+                <div>
+                  {props.cardCount} / {props.cardCount}
+                </div>
+              );
+            }
+            return (
+              <div>
+                {props.activeCardIndex + 1} / {props.cardCount}
+              </div>
+            );
+          })()}
         </div>
       </CardActions>
     </Card>

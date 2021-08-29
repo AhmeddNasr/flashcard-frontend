@@ -6,7 +6,7 @@ import {
   Button,
 } from "@material-ui/core";
 import React from "react";
-
+// eslint-disable-next-line
 const generateLongWord = (count) => {
   let string = "";
   for (let i = 0; i < count; i++) {

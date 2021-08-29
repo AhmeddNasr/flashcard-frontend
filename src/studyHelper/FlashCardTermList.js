@@ -2,38 +2,47 @@ import { useEffect, useState } from "react";
 import FlashCardBAK from "./FlashCardBAK";
 import FlashCardControls from "./FlashCardControls";
 import TermList from "./TermList";
+import generateFlashcards from "./generateFlashcards";
 
 function FlashCardTermList(props) {
   //TODO change true to user preference
   const [cardFront, setCardFront] = useState(true);
+  //TODO change false to user preference
+  const [shuffleCards, setShuffleCards] = useState(false);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   //prevent user from accidentally going to the end of cards by pressing left arrow on activeCardIndex 0
   const [buffer, setBuffer] = useState(0);
 
-  //TODO
-  // const [isKeyBeingHeldDown, setIsKeyBeingHeldDown] = useState(false);
+  //TODO handle keys being held down
 
   const toggleCardFront = () => {
     setCardFront(!cardFront);
   };
 
+  //spacebar and enter
   const handleSpaceBar = (event) => {
-    if (activeCardIndex === props.flashCards.length) {
+    if (activeCardIndex === flashCards.length) {
       event.preventDefault();
       return setActiveCardIndex(0);
     }
-    if (event.key === " " && event.target === document.body) {
+    if (
+      (event.key === " " || event.key === "Enter") &&
+      event.target === document.body
+    ) {
       event.preventDefault();
       toggleCardFront();
     }
   };
 
   const incrementActiveCardIndex = () => {
-    if (activeCardIndex !== props.flashCards.length) {
+    if (activeCardIndex !== flashCards.length) {
       setActiveCardIndex(activeCardIndex + 1);
     } else {
       //go back to the beginning when end is reached
       setActiveCardIndex(0);
+      if (shuffleCards) {
+        flashCards = generateFlashcards(shuffleCards);
+      }
     }
     //TODO change true to user preference
     setCardFront(true);
@@ -48,7 +57,7 @@ function FlashCardTermList(props) {
       if (buffer === 0) {
         setBuffer(1);
       } else {
-        setActiveCardIndex(props.flashCards.length-1);
+        setActiveCardIndex(flashCards.length - 1);
       }
     }
   };
@@ -62,6 +71,11 @@ function FlashCardTermList(props) {
     }
   };
 
+  const handleShuffle = () => {
+    setShuffleCards(!shuffleCards);
+    setActiveCardIndex(0);
+  };
+
   //handle key presses
   useEffect(() => {
     window.addEventListener("keydown", handleSpaceBar);
@@ -73,13 +87,15 @@ function FlashCardTermList(props) {
     // eslint-disable-next-line
   }, [cardFront, activeCardIndex, buffer]);
 
+  let flashCards = generateFlashcards(props.cardData, shuffleCards);
+
   return (
     <div>
       <div>
         <FlashCardBAK
-          flashCard={props.flashCards[activeCardIndex]}
+          flashCard={flashCards[activeCardIndex]}
           activeCardIndex={activeCardIndex}
-          cardCount={props.flashCards.length}
+          cardCount={flashCards.length}
           nextTerm={() => props.nextTerm()}
           cardFront={cardFront}
           toggleCardFront={() => toggleCardFront()}
@@ -89,6 +105,8 @@ function FlashCardTermList(props) {
           increment={() => incrementActiveCardIndex()}
           decrement={() => decrementActiveCardIndex()}
           flip={() => toggleCardFront()}
+          shuffle={() => handleShuffle()}
+          isShuffled={shuffleCards}
         />
       </div>
       <p className="termList-sectionTitle">

@@ -39,11 +39,9 @@ function Folder(props) {
 
   //display flashcard, and term list if the class is not empty and contains some terms
   if (cardData.length > 0) {
-    let flashcards = generateFlashcards(cardData, null);
     return (
       <FlashCardTermList
         cardData={cardData}
-        flashCards={flashcards}
       />
     );
   }

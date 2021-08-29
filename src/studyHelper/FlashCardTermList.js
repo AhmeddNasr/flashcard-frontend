@@ -3,13 +3,15 @@ import FlashCardBAK from "./FlashCardBAK";
 import FlashCardControls from "./FlashCardControls";
 import TermList from "./TermList";
 import generateFlashcards from "./generateFlashcards";
+import FlashCardSettings from "./FlashCardSettings";
 
 function FlashCardTermList(props) {
-  //TODO change true to user preference
-  const [cardFront, setCardFront] = useState(true);
-  //TODO change false to user preference
+  const [isFrontFaceDefault, setIsFrontFaceDefault] = useState(true);
   const [shuffleCards, setShuffleCards] = useState(false);
+  //TODO
+  const [cardFront, setCardFront] = useState(true);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
+
   //prevent user from accidentally going to the end of cards by pressing left arrow on activeCardIndex 0
   const [buffer, setBuffer] = useState(0);
 
@@ -92,6 +94,12 @@ function FlashCardTermList(props) {
   return (
     <div>
       <div>
+        <FlashCardSettings 
+          isFrontFaceDefault={isFrontFaceDefault}
+          setIsFrontFaceDefault={setIsFrontFaceDefault}
+          shuffleCards={shuffleCards}
+          setShuffleCards={setShuffleCards}
+        />
         <FlashCardBAK
           flashCard={flashCards[activeCardIndex]}
           activeCardIndex={activeCardIndex}

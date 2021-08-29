@@ -7,7 +7,7 @@ import { Tooltip } from "@material-ui/core";
 function FlashCardControls(props) {
   return (
     <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-      <Tooltip title="Shuffle">
+      {/* <Tooltip title="Shuffle">
         <ShuffleIcon
           className={`flashcard-control ${
             props.isShuffled ? "flashcard-control-active" : null
@@ -16,7 +16,7 @@ function FlashCardControls(props) {
             props.shuffle();
           }}
         />
-      </Tooltip>
+      </Tooltip> */}
 
       <Tooltip title="Previous">
         <ArrowBackIcon

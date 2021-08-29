@@ -1,4 +1,19 @@
-function generateFlashcards(data) {
+function generateFlashcards(data, isShuffled) {
+  
+  const shuffle = (array) => {
+    let currentIndex = array.length,
+      randomIndex;
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+    return array;
+  };
+
   let flashcards = [];
   for (let i = 0; i < data.length; i++) {
     let term = data[i];
@@ -13,7 +28,11 @@ function generateFlashcards(data) {
       });
     }
   }
+
+  if (isShuffled) {
+    return shuffle(flashcards);
+  }
+
   return flashcards;
 }
-
 export default generateFlashcards;

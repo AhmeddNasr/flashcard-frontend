@@ -3,6 +3,9 @@
   text-decoration: none;
 }
 
+.Mui-disabled {
+  background-color: #363636;
+}
 
 @media screen and (min-width: 600px) {
   #create-class-form {
@@ -23,5 +26,12 @@
   }
   .create-class-accordion {
     width:310px !important;
+  }
+}
+
+/* general */
+@media screen and (max-width: 400px) {
+  .responsive-cardHeader > .MuiCardHeader-content > .MuiCardHeader-title{
+    font-size: 1.3rem !important;
   }
 }

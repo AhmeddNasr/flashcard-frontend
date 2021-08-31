@@ -1,24 +1,15 @@
-import { Button, CardHeader, Divider } from "@material-ui/core";
+import { Button, CardHeader, Divider, IconButton } from "@material-ui/core";
 import { useState } from "react";
 import { FormGroup, FormControlLabel, Switch, Card } from "@material-ui/core";
 import React from "react";
+import CloseIcon from "@material-ui/icons/Close";
 import "./styles/flashcard-settings.css";
 
 function FlashCardSettings(props) {
   const [isMenuActive, setIsMenuActive] = useState(false);
 
-  const handleClickAwayFromMenu = (e) => {
-    if (!document.getElementById("flashcard-settings").contains(e.target)) {
-      handleMenuMinimize();
-      window.removeEventListener("click", handleClickAwayFromMenu);
-    }
-  };
-
   const handleMenuExpansion = () => {
     setIsMenuActive(true);
-    setTimeout(() => {
-      window.addEventListener("click", handleClickAwayFromMenu);
-    }, 0);
   };
 
   const handleMenuMinimize = () => {
@@ -26,20 +17,39 @@ function FlashCardSettings(props) {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: "20px" }}>
       <Button onClick={() => handleMenuExpansion()} variant="contained">
         Customize Flashcards
       </Button>
       {/* menu */}
       {(() => {
+        console.log(isMenuActive);
         if (!isMenuActive) {
           return null;
         }
         return (
           <React.Fragment>
-            <div className="darken-screen" />
+            <div
+              className="darken-screen"
+              onClick={() => handleMenuMinimize()}
+            />
             <Card id="flashcard-settings">
-              <CardHeader title="Customize Cards" />
+              <CardHeader
+                className="responsive-cardHeader"
+                title="Customize Cards"
+                action={
+                  <IconButton
+                    id="flashcard-settings-action"
+                    style={{
+                      paddingTop: "20px",
+                      backgroundColor: "transparent",
+                    }}
+                    onClick={() => handleMenuMinimize()}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                }
+              />
               <Divider style={{ marginBottom: "10px" }} />
               <form>
                 <FormGroup column>

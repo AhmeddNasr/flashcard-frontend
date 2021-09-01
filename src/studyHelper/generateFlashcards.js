@@ -1,18 +1,15 @@
 function generateFlashcards(data, isShuffled) {
   
-  const shuffle = (array) => {
-    let currentIndex = array.length,
-      randomIndex;
-    while (currentIndex !== 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ];
+  function shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
     }
-    return array;
-  };
+    return a;
+}
 
   let flashcards = [];
   for (let i = 0; i < data.length; i++) {
@@ -28,6 +25,7 @@ function generateFlashcards(data, isShuffled) {
       });
     }
   }
+
 
   if (isShuffled) {
     return shuffle(flashcards);

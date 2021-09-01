@@ -4,18 +4,24 @@ import FlashCardControls from "./FlashCardControls";
 import TermList from "./TermList";
 import generateFlashcards from "./generateFlashcards";
 import FlashCardSettings from "./FlashCardSettings";
+import { Button } from "@material-ui/core";
 
 function FlashCardTermList(props) {
   const [isBackFaceDefault, setIsBackFaceDefault] = useState(false);
   const [shuffleCards, setShuffleCards] = useState(false);
-  //TODO
   const [cardFront, setCardFront] = useState(!isBackFaceDefault);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const [flashCards, setFlashCards] = useState(generateFlashcards(props.cardData, shuffleCards))
 
   //prevent user from accidentally going to the end of cards by pressing left arrow on activeCardIndex 0
   const [buffer, setBuffer] = useState(0);
 
   //TODO handle keys being held down
+
+  const regenerateCards = () => {
+    setActiveCardIndex(0);
+    setFlashCards(generateFlashcards(props.cardData, shuffleCards));
+  }
 
   const toggleCardFront = () => {
     setCardFront(!cardFront);
@@ -43,7 +49,7 @@ function FlashCardTermList(props) {
       //go back to the beginning when end is reached
       setActiveCardIndex(0);
       if (shuffleCards) {
-        flashCards = generateFlashcards(shuffleCards);
+        regenerateCards();
       }
     }
     setCardFront(!isBackFaceDefault);
@@ -87,7 +93,11 @@ function FlashCardTermList(props) {
     // eslint-disable-next-line
   }, [cardFront, activeCardIndex, buffer, isBackFaceDefault]);
 
-  let flashCards = generateFlashcards(props.cardData, shuffleCards);
+  // let flashCards = generateFlashcards(props.cardData, shuffleCards);
+  
+  useEffect(() => {
+    regenerateCards();
+  }, [shuffleCards])
 
   return (
     <div>
@@ -105,8 +115,8 @@ function FlashCardTermList(props) {
           increment={() => incrementActiveCardIndex()}
           decrement={() => decrementActiveCardIndex()}
           flip={() => toggleCardFront()}
-          shuffle={() => handleShuffle()}
-          isShuffled={shuffleCards}
+          // shuffle={() => handleShuffle()}
+          // isShuffled={shuffleCards}
         />
       </div>
       <FlashCardSettings 
@@ -115,6 +125,7 @@ function FlashCardTermList(props) {
           shuffleCards={shuffleCards}
           setShuffleCards={setShuffleCards}
           setCardFront={setCardFront}
+          regenerateCards={regenerateCards}
         />
       <p className="termList-sectionTitle">
         List of terms in this class ({props.cardData.length})

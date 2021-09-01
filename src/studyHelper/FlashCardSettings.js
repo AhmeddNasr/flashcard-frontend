@@ -59,9 +59,9 @@ function FlashCardSettings(props) {
                         checked={props.shuffleCards}
                         color="secondary"
                         name="shuffleCards"
-                        onChange={(e) =>
-                          props.setShuffleCards(e.target.checked)
-                        }
+                        onChange={(e) => {
+                          props.setShuffleCards(e.target.checked);
+                        }}
                       />
                     }
                     label="Shuffle cards"

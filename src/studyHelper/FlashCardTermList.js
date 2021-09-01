@@ -6,10 +6,10 @@ import generateFlashcards from "./generateFlashcards";
 import FlashCardSettings from "./FlashCardSettings";
 
 function FlashCardTermList(props) {
-  const [isFrontFaceDefault, setIsFrontFaceDefault] = useState(true);
+  const [isBackFaceDefault, setIsBackFaceDefault] = useState(false);
   const [shuffleCards, setShuffleCards] = useState(false);
   //TODO
-  const [cardFront, setCardFront] = useState(true);
+  const [cardFront, setCardFront] = useState(!isBackFaceDefault);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
 
   //prevent user from accidentally going to the end of cards by pressing left arrow on activeCardIndex 0
@@ -46,15 +46,13 @@ function FlashCardTermList(props) {
         flashCards = generateFlashcards(shuffleCards);
       }
     }
-    //TODO change true to user preference
-    setCardFront(true);
+    setCardFront(!isBackFaceDefault);
   };
 
   const decrementActiveCardIndex = () => {
     if (activeCardIndex !== 0) {
       setActiveCardIndex(activeCardIndex - 1);
-      //TODO change true to user preference
-      setCardFront(true);
+      setCardFront(!isBackFaceDefault);
     } else {
       if (buffer === 0) {
         setBuffer(1);
@@ -87,19 +85,13 @@ function FlashCardTermList(props) {
       window.removeEventListener("keydown", handleArrowKeys);
     };
     // eslint-disable-next-line
-  }, [cardFront, activeCardIndex, buffer]);
+  }, [cardFront, activeCardIndex, buffer, isBackFaceDefault]);
 
   let flashCards = generateFlashcards(props.cardData, shuffleCards);
 
   return (
     <div>
       <div>
-        <FlashCardSettings 
-          isFrontFaceDefault={isFrontFaceDefault}
-          setIsFrontFaceDefault={setIsFrontFaceDefault}
-          shuffleCards={shuffleCards}
-          setShuffleCards={setShuffleCards}
-        />
         <FlashCardBAK
           flashCard={flashCards[activeCardIndex]}
           activeCardIndex={activeCardIndex}
@@ -117,6 +109,13 @@ function FlashCardTermList(props) {
           isShuffled={shuffleCards}
         />
       </div>
+      <FlashCardSettings 
+          isBackFaceDefault={isBackFaceDefault}
+          setIsBackFaceDefault={setIsBackFaceDefault}
+          shuffleCards={shuffleCards}
+          setShuffleCards={setShuffleCards}
+          setCardFront={setCardFront}
+        />
       <p className="termList-sectionTitle">
         List of terms in this class ({props.cardData.length})
       </p>

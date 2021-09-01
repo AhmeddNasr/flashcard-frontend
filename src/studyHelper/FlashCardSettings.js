@@ -69,12 +69,13 @@ function FlashCardSettings(props) {
                   <FormControlLabel
                     control={
                       <Switch
-                        checked={props.isFrontFaceDefault}
+                        checked={props.isBackFaceDefault}
                         color="secondary"
                         name="defaultFace"
-                        onChange={(e) =>
-                          props.setIsFrontFaceDefault(e.target.checked)
-                        }
+                        onChange={(e) => {
+                          props.setIsBackFaceDefault(e.target.checked);
+                          props.setCardFront(!e.target.checked);
+                        }}
                       />
                     }
                     label="Show Answer First"

@@ -4,39 +4,43 @@ import { FormGroup, FormControlLabel, Switch, Card } from "@material-ui/core";
 import React from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import "./styles/flashcard-settings.css";
-
+import FlashCardSettingsHome from "./FlashCardSettingsHome";
+import FlashCardSettingsCustomizePlayList from "./FlashCardSettingsCustomizePlaylist";
 function FlashCardSettings(props) {
-  const [isMenuActive, setIsMenuActive] = useState(false);
+  // const [isMenuActive, setIsMenuActive] = useState(false);
+  // const [currentPage, setCurrentPage] = useState(0);
 
-  const handleMenuExpansion = () => {
-    setIsMenuActive(true);
-  };
+  // const handleMenuExpansion = () => {
+  //   setIsMenuActive(true);
+  //   document.body.style.overflow = 'hidden'; 
+  // };
 
-  const handleMenuMinimize = () => {
-    setIsMenuActive(false);
-  };
-
+  // const handleMenuMinimize = () => {
+  //   setIsMenuActive(false);
+  //   document.body.style.overflow = 'initial';
+  //   setCurrentPage(0);
+  // };
+  
   return (
     <div style={{ marginTop: "20px" }}>
-      <Button onClick={() => handleMenuExpansion()} variant="contained">
-        Customize Flashcards
+      <Button onClick={() => props.handleMenuExpansion()} variant="contained">
+        FlashCard Settings
       </Button>
       {/* menu */}
       {(() => {
-        console.log(isMenuActive);
-        if (!isMenuActive) {
+        if (!props.isMenuActive) {
           return null;
         }
         return (
           <React.Fragment>
             <div
               className="darken-screen"
-              onClick={() => handleMenuMinimize()}
+              onClick={() => props.handleMenuMinimize()}
             />
             <Card id="flashcard-settings">
               <CardHeader
                 className="responsive-cardHeader"
-                title="Customize Cards"
+                title="Card Settings"
                 action={
                   <IconButton
                     id="flashcard-settings-action"
@@ -44,44 +48,37 @@ function FlashCardSettings(props) {
                       paddingTop: "20px",
                       backgroundColor: "transparent",
                     }}
-                    onClick={() => handleMenuMinimize()}
+                    onClick={() => props.handleMenuMinimize()}
                   >
                     <CloseIcon />
                   </IconButton>
                 }
               />
               <Divider style={{ marginBottom: "10px" }} />
-              <form>
-                <FormGroup column>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={props.shuffleCards}
-                        color="secondary"
-                        name="shuffleCards"
-                        onChange={(e) => {
-                          props.setShuffleCards(e.target.checked);
-                        }}
+              {(() => {
+                if (props.currentPage === 0) {
+                  return (
+                    <FlashCardSettingsHome
+                      setCardFront={props.setCardFront}
+                      setIsBackFaceDefault={props.setIsBackFaceDefault}
+                      setShuffleCards={props.setShuffleCards}
+                      shuffleCards={props.shuffleCards}
+                      isBackFaceDefault={props.isBackFaceDefault}
+                      setCurrentPage={(num) => props.setCurrentPage(num)}
+                    />
+                  );
+                } else {
+                  if (props.currentPage === 1) {
+                    return (
+                      <FlashCardSettingsCustomizePlayList
+                        setCurrentPage={(num) => props.setCurrentPage(num)}
+                        isCustomPlaylistDisabled={props.isCustomPlaylistDisabled}
+                        setIsCustomPlaylistDisabled={props.setIsCustomPlaylistDisabled}                
                       />
-                    }
-                    label="Shuffle cards"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={props.isBackFaceDefault}
-                        color="secondary"
-                        name="defaultFace"
-                        onChange={(e) => {
-                          props.setIsBackFaceDefault(e.target.checked);
-                          props.setCardFront(!e.target.checked);
-                        }}
-                      />
-                    }
-                    label="Show Answer First"
-                  />
-                </FormGroup>
-              </form>
+                    );
+                  }
+                }
+              })()}
             </Card>
           </React.Fragment>
         );

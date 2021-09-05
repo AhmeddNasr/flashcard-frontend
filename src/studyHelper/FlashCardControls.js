@@ -3,7 +3,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import FlipIcon from "@material-ui/icons/Flip";
 import ShuffleIcon from "@material-ui/icons/Shuffle";
 import { Tooltip } from "@material-ui/core";
-
+import SettingsIcon from "@material-ui/icons/Settings";
 function FlashCardControls(props) {
   return (
     <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
@@ -17,6 +17,16 @@ function FlashCardControls(props) {
           }}
         />
       </Tooltip> */}
+
+      <Tooltip title="Shuffle">
+        <ShuffleIcon
+          className={`flashcard-control ${props.shuffleCards ? 'flashcard-control-active' : ''}`}
+          onClick={(e) => {
+            props.setShuffleCards(!props.shuffleCards);
+            props.regenerateCards();
+          }}
+        />
+      </Tooltip>
 
       <Tooltip title="Previous">
         <ArrowBackIcon
@@ -40,6 +50,15 @@ function FlashCardControls(props) {
           className="flashcard-control"
           onClick={(e) => {
             props.increment();
+          }}
+        />
+      </Tooltip>
+
+      <Tooltip title="Settings">
+        <SettingsIcon
+          className="flashcard-control"
+          onClick={(e) => {
+            props.handleMenuExpansion();
           }}
         />
       </Tooltip>

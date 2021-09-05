@@ -1,5 +1,13 @@
-function generateFlashcards(data, isShuffled) {
-  
+function generateFlashcards(data, isShuffled, query) {
+  // function filter(card) {
+    
+  // }
+  function check(param, query) {
+    if(param.toLowerCase().includes(query.toLowerCase())) {
+      return false;
+    }
+    return true;
+  }
   function shuffle(a) {
     var j, x, i;
     for (i = a.length - 1; i > 0; i--) {
@@ -10,12 +18,20 @@ function generateFlashcards(data, isShuffled) {
     }
     return a;
 }
-
   let flashcards = [];
   for (let i = 0; i < data.length; i++) {
     let term = data[i];
+    //filter terms
+    if(query) {
+      if(query.queryTargets.includes('term')) {
+        if (check(term.termTitle, query.flashcardQuery)) {
+          continue;
+        }
+      }
+    }
     for (let y = 0; y < term.questions.length; y++) {
       let question = term.questions[y];
+
       flashcards.push({
         termID: term.id,
         questionID: question.id,
@@ -25,7 +41,6 @@ function generateFlashcards(data, isShuffled) {
       });
     }
   }
-
 
   if (isShuffled) {
     return shuffle(flashcards);

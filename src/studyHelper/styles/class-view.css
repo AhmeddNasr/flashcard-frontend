@@ -29,3 +29,8 @@
   opacity: 100%;
   cursor: pointer;
 }
+
+.flashcard-control-active {
+  opacity:100% !important;
+  color: crimson;
+}

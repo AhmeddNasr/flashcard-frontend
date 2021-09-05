@@ -1,27 +1,43 @@
 import { useEffect, useState } from "react";
-import FlashCardBAK from "./FlashCardBAK";
+import FlashCard from "./FlashCard";
 import FlashCardControls from "./FlashCardControls";
 import TermList from "./TermList";
 import generateFlashcards from "./generateFlashcards";
 import FlashCardSettings from "./FlashCardSettings";
 import { Button } from "@material-ui/core";
+// import { Button } from "@material-ui/core";
 
 function FlashCardTermList(props) {
   const [isBackFaceDefault, setIsBackFaceDefault] = useState(false);
   const [shuffleCards, setShuffleCards] = useState(false);
   const [cardFront, setCardFront] = useState(!isBackFaceDefault);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
-  const [flashCards, setFlashCards] = useState(generateFlashcards(props.cardData, shuffleCards))
-
+  const [flashCards, setFlashCards] = useState(
+    generateFlashcards(props.cardData, shuffleCards)
+  );
+  const [isCustomPlaylistDisabled, setIsCustomPlaylistDisabled] =
+    useState(true);
   //prevent user from accidentally going to the end of cards by pressing left arrow on activeCardIndex 0
   const [buffer, setBuffer] = useState(0);
 
-  //TODO handle keys being held down
+  //flashcard settings
+  const [isMenuActive, setIsMenuActive] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  //filter cards
+  const [flashcardQuery, setFlashcardQuery] = useState("Benzo");
+  const [queryTargets, setQueryTargets] = useState(["term"]);
 
   const regenerateCards = () => {
+    let query;
+    if (!isCustomPlaylistDisabled) {
+      query = {
+        flashcardQuery,
+        queryTargets,
+      };
+    }
     setActiveCardIndex(0);
-    setFlashCards(generateFlashcards(props.cardData, shuffleCards));
-  }
+    setFlashCards(generateFlashcards(props.cardData, shuffleCards, query));
+  };
 
   const toggleCardFront = () => {
     setCardFront(!cardFront);
@@ -77,9 +93,15 @@ function FlashCardTermList(props) {
     }
   };
 
-  const handleShuffle = () => {
-    setShuffleCards(!shuffleCards);
-    setActiveCardIndex(0);
+  const handleMenuExpansion = () => {
+    setIsMenuActive(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const handleMenuMinimize = () => {
+    setIsMenuActive(false);
+    document.body.style.overflow = "initial";
+    setCurrentPage(0);
   };
 
   //handle key presses
@@ -94,15 +116,16 @@ function FlashCardTermList(props) {
   }, [cardFront, activeCardIndex, buffer, isBackFaceDefault]);
 
   // let flashCards = generateFlashcards(props.cardData, shuffleCards);
-  
+
   useEffect(() => {
     regenerateCards();
-  }, [shuffleCards])
+  }, [shuffleCards]);
 
   return (
     <div>
+      <Button onClick={() => regenerateCards()}>Regenerate</Button>
       <div>
-        <FlashCardBAK
+        <FlashCard
           flashCard={flashCards[activeCardIndex]}
           activeCardIndex={activeCardIndex}
           cardCount={flashCards.length}
@@ -115,21 +138,28 @@ function FlashCardTermList(props) {
           increment={() => incrementActiveCardIndex()}
           decrement={() => decrementActiveCardIndex()}
           flip={() => toggleCardFront()}
-          // shuffle={() => handleShuffle()}
-          // isShuffled={shuffleCards}
+          setShuffleCards={setShuffleCards}
+          shuffleCards={shuffleCards}
+          regenerateCards={regenerateCards}
+          handleMenuExpansion={handleMenuExpansion}
         />
       </div>
-      <FlashCardSettings 
-          isBackFaceDefault={isBackFaceDefault}
-          setIsBackFaceDefault={setIsBackFaceDefault}
-          shuffleCards={shuffleCards}
-          setShuffleCards={setShuffleCards}
-          setCardFront={setCardFront}
-          regenerateCards={regenerateCards}
-        />
-      <p className="termList-sectionTitle">
-        List of terms in this class ({props.cardData.length})
-      </p>
+      <FlashCardSettings
+        isBackFaceDefault={isBackFaceDefault}
+        setIsBackFaceDefault={setIsBackFaceDefault}
+        shuffleCards={shuffleCards}
+        setShuffleCards={setShuffleCards}
+        setCardFront={setCardFront}
+        regenerateCards={regenerateCards}
+        isCustomPlaylistDisabled={isCustomPlaylistDisabled}
+        setIsCustomPlaylistDisabled={setIsCustomPlaylistDisabled}
+        handleMenuExpansion={handleMenuExpansion}
+        handleMenuMinimize={handleMenuMinimize}
+        isMenuActive={isMenuActive}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+
       <TermList terms={props.cardData} />
     </div>
   );

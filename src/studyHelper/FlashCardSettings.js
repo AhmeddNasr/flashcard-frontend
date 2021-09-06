@@ -7,20 +7,6 @@ import "./styles/flashcard-settings.css";
 import FlashCardSettingsHome from "./FlashCardSettingsHome";
 import FlashCardSettingsCustomizePlayList from "./FlashCardSettingsCustomizePlaylist";
 function FlashCardSettings(props) {
-  // const [isMenuActive, setIsMenuActive] = useState(false);
-  // const [currentPage, setCurrentPage] = useState(0);
-
-  // const handleMenuExpansion = () => {
-  //   setIsMenuActive(true);
-  //   document.body.style.overflow = 'hidden'; 
-  // };
-
-  // const handleMenuMinimize = () => {
-  //   setIsMenuActive(false);
-  //   document.body.style.overflow = 'initial';
-  //   setCurrentPage(0);
-  // };
-  
   return (
     <div style={{ marginTop: "20px" }}>
       <Button onClick={() => props.handleMenuExpansion()} variant="contained">
@@ -73,7 +59,8 @@ function FlashCardSettings(props) {
                       <FlashCardSettingsCustomizePlayList
                         setCurrentPage={(num) => props.setCurrentPage(num)}
                         isCustomPlaylistDisabled={props.isCustomPlaylistDisabled}
-                        setIsCustomPlaylistDisabled={props.setIsCustomPlaylistDisabled}                
+                        setIsCustomPlaylistDisabled={props.setIsCustomPlaylistDisabled}
+                        cardData={props.cardData}                
                       />
                     );
                   }

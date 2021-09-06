@@ -25,14 +25,14 @@ function FlashCardTermList(props) {
   const [currentPage, setCurrentPage] = useState(0);
   //filter cards
   const [flashcardQuery, setFlashcardQuery] = useState("Benzo");
-  const [queryTargets, setQueryTargets] = useState(["term"]);
+  const [queryTarget, setQueryTarget] = useState(["term"]);
 
   const regenerateCards = () => {
     let query;
     if (!isCustomPlaylistDisabled) {
       query = {
         flashcardQuery,
-        queryTargets,
+        queryTarget,
       };
     }
     setActiveCardIndex(0);
@@ -158,6 +158,9 @@ function FlashCardTermList(props) {
         isMenuActive={isMenuActive}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
+        setFlashcardQuery={setFlashcardQuery}
+        setQueryTarget={setQueryTarget}
+        cardData={props.cardData}
       />
 
       <TermList terms={props.cardData} />

@@ -15,19 +15,19 @@ import * as Yup from "yup";
 import React from "react";
 
 function formatValues(values) {
-  let termArray = [];
-  let questionArray = [];
-  for (let i = 0; i < values.terms.length; i++) {
-    if (values.terms[i].term !== "") {
-      termArray.push(values.terms[i].term);
-      questionArray.push(values.terms[i].questions);
-    }
-  }
+  // let termArray = [];
+  // let questionArray = [];
+  // for (let i = 0; i < values.terms.length; i++) {
+  //   if (values.terms[i].term !== "") {
+  //     termArray.push(values.terms[i].term);
+  //     questionArray.push(values.terms[i].questions);
+  //   }
+  // }
   return {
     class_name: values.class_name,
     class_description: values.class_description,
-    terms: termArray,
-    questions: questionArray,
+    // terms: termArray,
+    // questions: questionArray,
   };
 }
 
@@ -39,37 +39,38 @@ function handleSubmit(values) {
     headers: { "Content-type": "application/json", Accept: "application/json" },
     body: JSON.stringify(formatValues(values)),
   })
+  //TODO
     .then((data) => console.log(data))
     .catch((err) => console.log(err));
 }
 
 function CreateClass() {
   // TODO custom textField
-  function isValidQuestionAnswer(message) {
-    return this.test("isValidQuestionAnswer", message, function (value) {
-      const { path, createError } = this;
-      if (value.term) {
-        //TODO check both answer and question at the same time
-        for (let i = 0; i < value.questions.length; i++) {
-          let currentQuestion = `${path}.questions[${i}]`;
-          if (!value.questions[i].question) {
-            return createError({
-              path: `${currentQuestion}.question`,
-              message: "Question can not be empty",
-            });
-          }
-          if (!value.questions[i].answer) {
-            return createError({
-              path: `${currentQuestion}.answer`,
-              message: "Answer can not be empty",
-            });
-          }
-        }
-      }
-      return true;
-    });
-  }
-  Yup.addMethod(Yup.object, "isValidQuestionAnswer", isValidQuestionAnswer);
+  // function isValidQuestionAnswer(message) {
+  //   return this.test("isValidQuestionAnswer", message, function (value) {
+  //     const { path, createError } = this;
+  //     if (value.term) {
+  //       //TODO check both answer and question at the same time
+  //       for (let i = 0; i < value.questions.length; i++) {
+  //         let currentQuestion = `${path}.questions[${i}]`;
+  //         if (!value.questions[i].question) {
+  //           return createError({
+  //             path: `${currentQuestion}.question`,
+  //             message: "Question can not be empty",
+  //           });
+  //         }
+  //         if (!value.questions[i].answer) {
+  //           return createError({
+  //             path: `${currentQuestion}.answer`,
+  //             message: "Answer can not be empty",
+  //           });
+  //         }
+  //       }
+  //     }
+  //     return true;
+  //   });
+  // }
+  // Yup.addMethod(Yup.object, "isValidQuestionAnswer", isValidQuestionAnswer);
 
   const FormSchema = Yup.object().shape({
     class_name: Yup.string()
@@ -78,7 +79,7 @@ function CreateClass() {
       .max(19, "Too Long")
       .required("class name can not be empty"),
     class_description: Yup.string().max(200, "Too Long! (Max 200 Character)"),
-    terms: Yup.array().of(Yup.object().isValidQuestionAnswer()),
+    // terms: Yup.array().of(Yup.object().isValidQuestionAnswer()),
   });
   //Formik setup
   const formik = useFormik({
@@ -87,12 +88,12 @@ function CreateClass() {
       class_name: "",
       class_description: "",
       // terms: [],
-      terms: [
-        {
-          term: "",
-          questions: [{ question: "", answer: "" }],
-        },
-      ],
+      // terms: [
+      //   {
+      //     term: "",
+      //     questions: [{ question: "", answer: "" }],
+      //   },
+      // ],
     },
     validationSchema: FormSchema,
     onSubmit: (values) => {
@@ -162,7 +163,7 @@ function CreateClass() {
                 variant="outlined"
               />
             </Grid>
-            {/* term fields */}
+            {/* term fields
             <Grid item sm={12} style={{ padding: "12px 0" }}>
               <Accordion className="create-class-accordion">
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -174,11 +175,10 @@ function CreateClass() {
                   </Grid>
                 </AccordionDetails>
               </Accordion>
-            </Grid>
+            </Grid> */}
             {/* Submit button */}
             <Grid item sm={12} align="center">
               {(() => {
-                console.log(formik.errors);
                 if (Object.keys(formik.errors).length === 0) {
                   return (
                     <Button type="submit" variant="contained">
@@ -196,7 +196,8 @@ function CreateClass() {
             </Grid>
           </Grid>
         </form>
-        <pre>{JSON.stringify(formik.errors, null, 2, 0)}</pre>
+        {/* Debugging form values */}
+        {/* <pre>{JSON.stringify(formik.errors, null, 2, 0)}</pre> */}
         {/* <pre>{JSON.stringify(formik.values, null, 2, 0)}</pre> */}
       </FormikProvider>
     </div>

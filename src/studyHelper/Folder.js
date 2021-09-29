@@ -52,12 +52,12 @@ function Folder(props) {
       <h1>It looks like this class is empty!</h1>
       <Button
         component={Link}
-        to={"/study/create-new-class"}
+        to={`/study/class/${props.match.params.folderID}/edit`}
         variant="contained"
         color="secondary"
         style={{ textDecoration: "none" }}
       >
-        Add some terms
+        Start adding some terms
       </Button>
     </div>
   );

@@ -1,42 +1,41 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import FlashCard from "./FlashCard";
 import FlashCardControls from "./FlashCardControls";
 import TermList from "./TermList";
 import generateFlashcards from "./generateFlashcards";
 import FlashCardSettings from "./FlashCardSettings";
+import TermListNew from "./TermListNew";
 import { Button } from "@material-ui/core";
-// import { Button } from "@material-ui/core";
 
 function FlashCardTermList(props) {
   const [isBackFaceDefault, setIsBackFaceDefault] = useState(false);
   const [shuffleCards, setShuffleCards] = useState(false);
   const [cardFront, setCardFront] = useState(!isBackFaceDefault);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
-  const [flashCards, setFlashCards] = useState(
-    generateFlashcards(props.cardData, shuffleCards)
-  );
+
+  //TODO fix this
+  let flashCards = useMemo(() => {
+    return generateFlashcards(props.cardData, shuffleCards);
+  }, [shuffleCards]);
+
   const [isCustomPlaylistDisabled, setIsCustomPlaylistDisabled] =
     useState(true);
   //prevent user from accidentally going to the end of cards by pressing left arrow on activeCardIndex 0
   const [buffer, setBuffer] = useState(0);
-
   //flashcard settings
   const [isMenuActive, setIsMenuActive] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   //filter cards
-  const [flashcardQuery, setFlashcardQuery] = useState("Benzo");
-  const [queryTarget, setQueryTarget] = useState(["term"]);
+  const [flashcardQuery, setFlashcardQuery] = useState();
 
   const regenerateCards = () => {
-    let query;
-    if (!isCustomPlaylistDisabled) {
-      query = {
-        flashcardQuery,
-        queryTarget,
-      };
-    }
+    console.log("i called regenerate cards");
     setActiveCardIndex(0);
-    setFlashCards(generateFlashcards(props.cardData, shuffleCards, query));
+    flashCards = generateFlashcards(
+      props.cardData,
+      shuffleCards,
+      flashcardQuery
+    );
   };
 
   const toggleCardFront = () => {
@@ -65,6 +64,7 @@ function FlashCardTermList(props) {
       //go back to the beginning when end is reached
       setActiveCardIndex(0);
       if (shuffleCards) {
+        console.log("hii");
         regenerateCards();
       }
     }
@@ -115,15 +115,9 @@ function FlashCardTermList(props) {
     // eslint-disable-next-line
   }, [cardFront, activeCardIndex, buffer, isBackFaceDefault]);
 
-  // let flashCards = generateFlashcards(props.cardData, shuffleCards);
-
-  useEffect(() => {
-    regenerateCards();
-  }, [shuffleCards]);
-
   return (
     <div>
-      <Button onClick={() => regenerateCards()}>Regenerate</Button>
+      {/* <Button onClick={() => regenerateCards()}>Regenerate</Button> */}
       <div>
         <FlashCard
           flashCard={flashCards[activeCardIndex]}
@@ -159,10 +153,10 @@ function FlashCardTermList(props) {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         setFlashcardQuery={setFlashcardQuery}
-        setQueryTarget={setQueryTarget}
         cardData={props.cardData}
       />
 
+      <TermListNew cardData={props.cardData} />
       <TermList terms={props.cardData} />
     </div>
   );

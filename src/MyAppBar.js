@@ -1,44 +1,60 @@
 import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
-import { Menu, Info, AddBox, ExitToApp } from "@material-ui/icons";
+import { Info, AddBox, ExitToApp, Create } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
 function MyAppBar() {
   return (
     <AppBar position="initial" color="primary">
       <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="menu">
-          <Menu />
-        </IconButton>
-        <Typography variant="h6">
-          <Link to="/study">Home</Link>
+        <Typography variant="h6" style={{border: '2px solid', padding: '0 5px'}}>
+          <Link to="/study">ModernCards</Link>
         </Typography>
         <ul id="appbar-navigation-large" className="appbar-navigation">
-          <li>
-            <Link to="/study">
-              <Typography variant="h6">My Classes</Typography>
-            </Link>
-          </li>
-          <li>
-            <Link to="/study/create-new-class">
-              <Typography variant="h6">Create</Typography>
-            </Link>
-          </li>
-          <li>
-            <Link to="/about">
-              <Typography variant="h6">About</Typography>
-            </Link>
-          </li>
-          <li>
-            <Link
-              onClick={() => {
-                window.location.href = "http://localhost:8080/logout";
-              }}
-            >
-              <Typography variant="h6">logout</Typography>
-            </Link>
-          </li>
+          <div className="appbar-control-group">
+            <li>
+              <Typography variant="h6" className="appbar-link">
+                <div className="appbar-control-button">
+                  <Link to="/study">
+                    My Classes
+                  </Link>
+                </div>
+              </Typography>
+            </li>
+            <li>
+              <Typography variant="h6" className="appbar-link">
+                <div className="appbar-control-button">
+                  <Link to="/study/create-new-class">Create Class</Link>
+                  <Create />
+                </div>
+              </Typography>
+            </li>
+          </div>
+          <div className="appbar-control-group">
+            <li>
+              <Typography variant="h6" className="appbar-link">
+                <div className="appbar-control-button">
+                  <Link to="/about">About</Link>
+                </div>
+              </Typography>
+            </li>
+            <li>
+              <Typography variant="h6" className="appbar-link">
+                <div className="appbar-control-button">
+                  <Link
+                    onClick={() => {
+                      window.location.href = "http://localhost:8080/logout";
+                    }}
+                    to="/study"
+                  >
+                    logout
+                  </Link>
+                  <ExitToApp />
+                </div>
+              </Typography>
+            </li>
+          </div>
         </ul>
-        
+
         {/* Small screens */}
         <ul id="appbar-navigation-small" className="appbar-navigation">
           <li style={{ color: "black" }}>

@@ -43,14 +43,14 @@ function GenerateFolders(props) {
           InputProps={{
             endAdornment: (
               <InputAdornment>
-              {/* Display search icon if TextField is empty */}
+                {/* Display search icon if TextField is empty */}
                 {query.length === 0 ? (
                   <IconButton disabled>
                     <Search />
                   </IconButton>
                 ) : (
                   // Display Clickable clear button if TextField is NOT empty
-                  <IconButton onClick={() => setQuery('')}>
+                  <IconButton onClick={() => setQuery("")}>
                     <Clear />
                   </IconButton>
                 )}
@@ -65,7 +65,7 @@ function GenerateFolders(props) {
   // "Create a new class" card
   folders.push(
     <Grid item md={4} sm={6} xs={12} style={{ textAlign: "start" }}>
-      <Card onClick={() => redirectToCreateNewClass()} className="classes">
+      <Card onClick={() => redirectToCreateNewClass()} className="classes card">
         <div
           style={{
             height: "100%",
@@ -83,7 +83,10 @@ function GenerateFolders(props) {
   for (let i = 0; i < props.folders.length; i++) {
     let currentFolder = props.folders[i];
     if (query.length > 0) {
-      if (!currentFolder.name.toLowerCase().includes(query) && !currentFolder.description.toLowerCase().includes(query)) {
+      if (
+        !currentFolder.name.toLowerCase().includes(query) &&
+        !currentFolder.description.toLowerCase().includes(query)
+      ) {
         continue;
       }
     }
@@ -100,10 +103,11 @@ function GenerateFolders(props) {
           onClick={() => {
             handleClick(currentFolder.folder_id);
           }}
-          className={"classes"}
+          className={"classes card"}
         >
           <div component={Button}>
             <CardHeader
+              className="responsive-cardHeader"
               title={currentFolder.name}
               style={{ paddingBottom: "0px" }}
             />

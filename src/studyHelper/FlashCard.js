@@ -34,6 +34,7 @@ function FlashCard(props) {
         userSelect: "none",
         margin: "30px auto",
       }}
+      className="card"
     >
       <CardContent
         style={{

@@ -32,5 +32,5 @@
 
 .flashcard-control-active {
   opacity:100% !important;
-  color: crimson;
+  color: rgb(90, 90, 253);
 }

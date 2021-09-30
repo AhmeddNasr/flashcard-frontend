@@ -1,11 +1,11 @@
 import { Button, CardHeader, Divider, IconButton } from "@material-ui/core";
-import { useState } from "react";
-import { FormGroup, FormControlLabel, Switch, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
 import React from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import "./styles/flashcard-settings.css";
 import FlashCardSettingsHome from "./FlashCardSettingsHome";
 import FlashCardSettingsCustomizePlayList from "./FlashCardSettingsCustomizePlaylist";
+
 function FlashCardSettings(props) {
   return (
     <div style={{ marginTop: "20px" }}>
@@ -23,7 +23,7 @@ function FlashCardSettings(props) {
               className="darken-screen"
               onClick={() => props.handleMenuMinimize()}
             />
-            <Card id="flashcard-settings">
+            <Card className="card" id="flashcard-settings">
               <CardHeader
                 className="responsive-cardHeader"
                 title="Card Settings"
@@ -60,7 +60,9 @@ function FlashCardSettings(props) {
                         setCurrentPage={(num) => props.setCurrentPage(num)}
                         isCustomPlaylistDisabled={props.isCustomPlaylistDisabled}
                         setIsCustomPlaylistDisabled={props.setIsCustomPlaylistDisabled}
-                        cardData={props.cardData}                
+                        setFlashcardQuery={props.setFlashcardQuery}
+                        cardData={props.cardData}
+                        regenerateCards={props.regenerateCards}             
                       />
                     );
                   }

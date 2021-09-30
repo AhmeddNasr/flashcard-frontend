@@ -13,7 +13,7 @@
 }
 
 .classes:hover {
-  background-color: #393939b2;
+  opacity: 0.9;
   cursor: pointer;
 }
 
@@ -65,6 +65,11 @@ a {
 a:visited {
   text-decoration: none;
   color: inherit;
+}
+
+.card {
+  background-color: #282a2e !important;
+  border-radius: 15px !important;
 }
 
 @media screen and (min-width: 500px) {

@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import GenerateFolders from "./GenerateFolders";
-import CircularProgress from "@material-ui/core/CircularProgress";
-
 import "./styles/style.css";
+import CenteredSpinner from "./CenteredSpinner";
 //TODO LAZY LOADING
 
 function FetchFolders() {
@@ -71,9 +70,7 @@ function FetchFolders() {
     );
   } else {
     return (
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <CircularProgress color="white" style={{ marginTop: "15%" }} />
-      </div>
+      <CenteredSpinner />
     );
   }
 }

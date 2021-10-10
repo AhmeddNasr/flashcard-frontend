@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import generateFlashcards from "./generateFlashcards";
 import fetchTerms from "./fetchTerms";
 // import "./styles/studyHelper.css";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import FlashCardTermList from "./FlashCardTermList";
+import CenteredSpinner from "./CenteredSpinner";
+
 function Folder(props) {
   // index of displayed term on the flash card
   const [cardData, setCardData] = useState(null);
@@ -19,21 +19,7 @@ function Folder(props) {
   if (cardData === null) {
     return (
       //center
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <CircularProgress
-          color="white"
-          size={60}
-          style={{ height: "30%", marginTop: "30vh" }}
-        />
-      </div>
+      <CenteredSpinner />
     );
   }
 

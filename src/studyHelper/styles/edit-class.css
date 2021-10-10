@@ -1,0 +1,5 @@
+.term-box {
+  padding: 10px;
+  border: 1px var(--primary-color) solid;
+  margin: 0 0 20px 0 !important;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "./studyHelper/styles/colors.css"
 import "./index.css";
 import App from "./App";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
@@ -79,6 +80,9 @@ function HandleAuthentication() {
 const theme = createTheme({
   palette: {
     type: "dark",
+    background: {
+      default: "#181a1f"
+    },
     primary: {
       main: "#fff",
     },

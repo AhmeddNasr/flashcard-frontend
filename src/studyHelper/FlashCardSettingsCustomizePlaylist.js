@@ -21,6 +21,14 @@ function FlashCardSettingsCustomizePlaylist(props) {
   const [typing, setTyping] = useState(false);
   const [noCardsFound, setNoCardsFound] = useState(false);
 
+  const applyCustomPlaylist = () => {
+    props.setFlashcardQuery({
+      queryTarget,
+      query
+    });
+    props.regenerateCards();
+  }
+
   //check if query is valid after user stopped typing
   useEffect(() => {
     const timeOutId = setTimeout(() => {
@@ -91,17 +99,12 @@ function FlashCardSettingsCustomizePlaylist(props) {
                   color="secondary"
                   style={{ margin: "10px 0", width: "200px" }}
                 >
-                  <InputLabel id="demo-simple-select-outlined-label">
-                    Filter on Field
-                  </InputLabel>
                   <Select
-                    labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
                     value={queryTarget}
                     onChange={(e) => {
                       setQueryTarget(e.target.value);
                     }}
-                    label="Filter Selected Field"
                   >
                     <MenuItem value={"question"}>Question</MenuItem>
                     <MenuItem value={"answer"}>Answer</MenuItem>
@@ -112,7 +115,6 @@ function FlashCardSettingsCustomizePlaylist(props) {
               <p style={{ margin: "10px 0" }}>Must Contain:</p>
               <TextField
                 name="query"
-                label="Query"
                 color="secondary"
                 variant="outlined"
                 autoComplete="off"
@@ -121,7 +123,7 @@ function FlashCardSettingsCustomizePlaylist(props) {
                 style={{ width: "200px" }}
                 helperText={queryMessage}
                 error={noCardsFound}
-                placeholder="e.g. President"
+                placeholder="Search text"
               />
               {(() => {
                 if (typing) {
@@ -155,7 +157,7 @@ function FlashCardSettingsCustomizePlaylist(props) {
               <Button
                 variant="outlined"
                 style={{ marginTop: "15px", marginLeft: "5px" }}
-                onClick={() => console.log("lol")}
+                onClick={() => applyCustomPlaylist()}
                 disabled={!isValidQuery}
               >
                 apply filter

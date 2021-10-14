@@ -8,7 +8,7 @@ function FlashCardSettingsHome(props) {
           control={
             <Switch
               checked={props.shuffleCards}
-              color="secondary"
+              color="#ffdc62"
               name="shuffleCards"
               onChange={(e) => {
                 props.setShuffleCards(e.target.checked);

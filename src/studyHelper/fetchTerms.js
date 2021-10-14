@@ -1,4 +1,6 @@
-function fetchTerms(folderID, setMockData) {
+//Fetches data from api then formats it with addToArray (from an array of question to an array of terms)
+//finally sets it in state
+function fetchTerms(folderID, setTermState) {
   let terms = [];
   fetch(`http://localhost:8080/api/terms/${folderID}`, {
     credentials: "include",
@@ -13,9 +15,9 @@ function fetchTerms(folderID, setMockData) {
     .then((data) => {
       if (data.length > 0) {
         addToArray(data);
-        setMockData(terms);
+        setTermState(terms);
       } else {
-        setMockData([])
+        setTermState([])
       }
     })
     .catch((err) => {

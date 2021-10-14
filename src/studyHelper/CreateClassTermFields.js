@@ -22,9 +22,20 @@ function CreateClassTermFields(props) {
                       alignItems: "center",
                     }}
                   >
-                    <h3 style={{ margin: "0, 0, 4px, 0" }}>{`Term - ${
+                    <h3 style={{ margin: "0, 0, 4px, 0" }}>{`Term  ${
                       index + 1
                     }`}</h3>
+                    {formik.values.terms.length === 1 ? null : (
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => {
+                          arrayHelpers.remove(index);
+                        }}
+                      >
+                        Remove Term
+                      </Button>
+                    )}
                   </div>
                   <Field
                     as={TextField}
@@ -37,15 +48,6 @@ function CreateClassTermFields(props) {
                     placeholder="e.g. World War 2"
                     style={{ marginBottom: "25px" }}
                   />
-                  {formik.values.terms.length === 1 ? null : (
-                    <Button
-                      onClick={() => {
-                        arrayHelpers.remove(index);
-                      }}
-                    >
-                      Remove Term
-                    </Button>
-                  )}
                   {/* Questions and answer */}
                   <FieldArray
                     name={`terms.${index}.questions`}
@@ -130,7 +132,7 @@ function CreateClassTermFields(props) {
                           }
                         )}
                         <Button
-                          style={{ marginBottom: "15px" }}
+                          style={{ marginBottom: "55px" }}
                           variant="contained"
                           color="primary"
                           onClick={() => {
@@ -164,4 +166,4 @@ function CreateClassTermFields(props) {
     />
   );
 }
- export default CreateClassTermFields;
+export default CreateClassTermFields;

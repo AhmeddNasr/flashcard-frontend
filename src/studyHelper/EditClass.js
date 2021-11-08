@@ -3,6 +3,7 @@ import fetchTerms from "./fetchTerms";
 import CenteredSpinner from "./CenteredSpinner";
 import EditClassForm from "./EditClassForm";
 import "./styles/edit-class.css"
+import { FastField } from "formik";
 
 function EditClass(props) {
   const [data, setData] = useState(null);
@@ -19,8 +20,7 @@ function EditClass(props) {
 
   return (
     <React.Fragment>
-      <h1>Folder Name</h1>
-      <EditClassForm data={data} />
+      <EditClassForm data={data} style={{margin: '200px !important'}}/>
     </React.Fragment>
   );
 }

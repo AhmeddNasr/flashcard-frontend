@@ -1,5 +1,29 @@
 .term-box {
-  padding: 10px;
-  border: 1px var(--primary-color) solid;
-  margin: 0 0 20px 0 !important;
+  padding: 30px 15px;
+  border: 1px var(--text-color) solid;
+  margin: 20px 0 !important;
+  border-radius: 5px;
+}
+
+.MuiFormHelperText-root {
+  user-select: none;
+}
+
+.edit-class-question-delete {
+  margin-top: 30px !important;
+}
+
+@media screen and (max-width: 1280px) {
+  .edit-class-question {
+    margin-top: 30px !important;
+  }
+  .edit-class-answer-delete {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .edit-class-question-delete {
+    display : none;
+  }
 }

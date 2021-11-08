@@ -20,7 +20,7 @@ function EditTerm(props) {
       <Grid item xs={12}>
         <Grid container justify="space-between">
           <Typography variant="h4">{`#${props.index + 1}`}</Typography>
-          <IconButton><Delete /></IconButton>
+          <IconButton onClick={() => {props.arrayHelpers.remove(props.index)}}><Delete /></IconButton>
         </Grid>
       </Grid>
       <Grid item xs={12}>

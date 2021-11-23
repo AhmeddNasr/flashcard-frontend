@@ -22,7 +22,9 @@ function EditTerm(props) {
       <Grid item xs={12}>
         <Grid container justify="space-between">
           <Typography variant="h4">{`#${props.index + 1}`}</Typography>
-          <IconButton onClick={() => handleClick(props.arrayHelpers, props.index)}>
+          <IconButton
+            onClick={() => handleClick(props.arrayHelpers, props.index)}
+          >
             <Delete />
           </IconButton>
         </Grid>
@@ -55,7 +57,12 @@ function EditTerm(props) {
                           xs={2}
                           lg={1}
                           // TODO prevent repeating me
-                          className= {`edit-class-answer-delete ${props.formik.values.terms[props.index].questions.length === 1 ? "hidden" : ""}`}
+                          className={`edit-class-answer-delete ${
+                            props.formik.values.terms[props.index].questions
+                              .length === 1
+                              ? "hidden"
+                              : ""
+                          }`}
                         >
                           <IconButton
                             onClick={() =>
@@ -85,7 +92,12 @@ function EditTerm(props) {
                           xs={2}
                           lg={1}
                           // TODO prevent repeating me
-                          className={`edit-class-question-delete ${props.formik.values.terms[props.index].questions.length === 1 ? "hidden" : ""}`}
+                          className={`edit-class-question-delete ${
+                            props.formik.values.terms[props.index].questions
+                              .length === 1
+                              ? "hidden"
+                              : ""
+                          }`}
                         >
                           <IconButton
                             onClick={() =>

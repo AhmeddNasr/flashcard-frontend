@@ -13,7 +13,7 @@ function FetchFolders() {
   useEffect(() => {
     //TODO replace 8777 with ${id}
     //empty user 908858
-    fetch("http://localhost:8080/api/folders/8777", { credentials: "include" })
+    fetch(`http://localhost:8080/api/folders/`, { headers: { Authorization: localStorage.getItem("token")} })
       .then((result) => {
         if (result.ok) {
           return result.json();

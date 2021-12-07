@@ -1,8 +1,16 @@
 import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
 import { Info, AddBox, ExitToApp, Create } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
+function logout(history) {
+  localStorage.removeItem("token");
+  //TODO redirect to login page
+  window.location.reload()
+}
 
 function MyAppBar() {
+  const history = useHistory();
   return (
     <AppBar
       position="initial"
@@ -51,7 +59,7 @@ function MyAppBar() {
                 <div className="appbar-control-button">
                   <Link
                     onClick={() => {
-                      window.location.href = "http://localhost:8080/logout";
+                      logout(history);
                     }}
                     to="/study"
                     className="appbar-control-button"
@@ -66,7 +74,8 @@ function MyAppBar() {
         </ul>
 
         {/* Small screens */}
-        <ul id="appbar-navigation-small" className="appbar-navigation">
+        {/* TODO: adapt me for smaller screens */}
+        <ul id="appbar-navigation-small" className="appbar-navigation" style={{display: "none"}}>
           <li style={{ color: "black" }}>
             <IconButton color="inherit">
               <Link to="/study/create-new-class">
@@ -85,7 +94,7 @@ function MyAppBar() {
             <IconButton color="inherit">
               <Link
                 onClick={() => {
-                  window.location.href = "http://localhost:8080/logout";
+                  logout(history);
                 }}
               >
                 <ExitToApp />

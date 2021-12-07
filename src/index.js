@@ -21,8 +21,8 @@ function HandleAuthentication(props) {
     window.location.href = "http://localhost:8080/google";
   };
 
-  if (false) {
-    directToLogin();
+  if (!localStorage.getItem("token")) {
+    return directToLogin();
   }
 
   return <AuthenticatedRouter />;
@@ -44,6 +44,8 @@ const theme = createTheme({
     },
   },
 });
+
+//check if user is not logged in
 
 ReactDOM.render(
   <React.StrictMode>

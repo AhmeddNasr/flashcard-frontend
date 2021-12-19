@@ -1,18 +1,10 @@
-import {
-  TextField,
-  Button,
-  Grid,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from "@material-ui/core";
+import { TextField, Button, Grid } from "@material-ui/core";
 import { Field, useFormik, FormikProvider } from "formik";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import CreateClassTermFields from "./CreateClassTermFields";
 // import { white } from "@material-ui/core/colors";
 import "./styles/create-class.css";
 import * as Yup from "yup";
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 function formatValues(values) {
   // let termArray = [];
@@ -32,19 +24,25 @@ function formatValues(values) {
 }
 
 //submit form
-function handleSubmit(values) {
-  fetch("http://localhost:8080/api/folders/8777", {
-    credentials: "include",
+function handleSubmit(values, setSubmitting, history) {
+  setSubmitting(true);
+  fetch("http://localhost:8080/api/folders/", {
     method: "POST",
-    headers: { "Content-type": "application/json", Accept: "application/json" },
+    headers: {
+      "Content-type": "application/json",
+      Accept: "application/json",
+      Authorization: localStorage.getItem("token"),
+    },
     body: JSON.stringify(formatValues(values)),
   })
-  //TODO
-    .then((data) => console.log(data))
+    //TODO
+    .then((result) => result.json())
+    .then((data) => history.push(`/study/class/${data.folder_id}/edit`))
     .catch((err) => console.log(err));
 }
 
 function CreateClass() {
+  const history = useHistory();
   // TODO custom textField
   // function isValidQuestionAnswer(message) {
   //   return this.test("isValidQuestionAnswer", message, function (value) {
@@ -72,6 +70,8 @@ function CreateClass() {
   // }
   // Yup.addMethod(Yup.object, "isValidQuestionAnswer", isValidQuestionAnswer);
 
+  const [submitting, setSubmitting] = useState(false);
+
   const FormSchema = Yup.object().shape({
     class_name: Yup.string()
       .trim()
@@ -87,17 +87,10 @@ function CreateClass() {
     initialValues: {
       class_name: "",
       class_description: "",
-      // terms: [],
-      // terms: [
-      //   {
-      //     term: "",
-      //     questions: [{ question: "", answer: "" }],
-      //   },
-      // ],
     },
     validationSchema: FormSchema,
     onSubmit: (values) => {
-      handleSubmit(values);
+      handleSubmit(values, setSubmitting, history);
     },
   });
 
@@ -123,7 +116,7 @@ function CreateClass() {
                 helperText={
                   formik.errors.class_name && formik.touched.class_name
                     ? formik.errors.class_name
-                    : null
+                    : " "
                 }
                 error={
                   formik.errors.class_name && formik.touched.class_name
@@ -133,7 +126,7 @@ function CreateClass() {
                 name="class_name"
                 placeholder="e.g. History (Grade 12)"
                 maxWidth="100%"
-                label="Class Name"
+                label="Class Name*"
                 variant="outlined"
                 fullWidth
               />
@@ -163,31 +156,18 @@ function CreateClass() {
                 variant="outlined"
               />
             </Grid>
-            {/* term fields
-            <Grid item sm={12} style={{ padding: "12px 0" }}>
-              <Accordion className="create-class-accordion">
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <h3 style={{ margin: "0px" }}>Add Some Terms (Optional)</h3>
-                </AccordionSummary>
-                <AccordionDetails style={{ padding: " 0 20px" }}>
-                  <Grid container justifyContent="center">
-                    <CreateClassTermFields formik={formik} />
-                  </Grid>
-                </AccordionDetails>
-              </Accordion>
-            </Grid> */}
             {/* Submit button */}
             <Grid item sm={12} align="center">
               {(() => {
                 if (Object.keys(formik.errors).length === 0) {
                   return (
-                    <Button type="submit" variant="contained">
+                    <Button type="submit" variant="contained" disabled={submitting ? true : false}>
                       Create Class
                     </Button>
                   );
                 } else {
                   return (
-                    <Button variant="contained" color="secondary">
+                    <Button variant="contained" disabled>
                       Create Class
                     </Button>
                   );

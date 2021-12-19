@@ -31,7 +31,6 @@ import EditTerm from "./EditTerm";
 // }
 
 function handleSubmit(values) {
-  console.log("hi");
   fetch("http://localhost:8080/api/terms/1", {
     credentials: "include",
     method: "POST",
@@ -43,6 +42,10 @@ function handleSubmit(values) {
     .catch((err) => console.log(err));
 }
 
+const emptyTerm = {
+  termTitle: "",
+  questions: [{ question: "", answer: "" }],
+};
 function EditClassForm(props) {
   const formik = useFormik({
     validateOnChange: false,
@@ -50,12 +53,17 @@ function EditClassForm(props) {
     initialValues: {
       folderName: "Folder name",
       folderDescription: "folder dedscription lorem impsum",
-      terms: props.data,
+      terms: props.data.length === 0 ? [emptyTerm] : props.data,
     },
     onSubmit: (values) => {
       handleSubmit(values);
     },
   });
+
+  function addEmptyTerm(arrayHelpers) {
+    arrayHelpers.push(emptyTerm);
+    console.log(formik.values);
+  }
 
   return (
     <FormikProvider value={formik}>
@@ -67,10 +75,10 @@ function EditClassForm(props) {
           spacing={3}
         >
           <Grid item>
-            <Typography variant="h2">Edit Class</Typography>
+            <Typography variant="h3">Edit Class</Typography>
           </Grid>
           <Grid item>
-            <Typography variant="h4">Class info</Typography>
+            <Typography variant="h5">Class info</Typography>
           </Grid>
           <Grid item>
             <FastField
@@ -91,7 +99,7 @@ function EditClassForm(props) {
             />
           </Grid>
           <Grid item>
-            <Typography variant="h4" style={{ marginTop: "15px" }}>
+            <Typography variant="h5" style={{ marginTop: "15px" }}>
               Edit Terms
             </Typography>
           </Grid>
@@ -102,6 +110,19 @@ function EditClassForm(props) {
                 return (
                   // term box
                   <React.Fragment>
+                    {index === 0 && (
+                      <Grid>
+                        <Button
+                          fullWidth
+                          variant="contained"
+                          color="primary"
+                          style={{ padding: "10px" }}
+                          onClick={() => addEmptyTerm(arrayHelpers)}
+                        >
+                          Add new term
+                        </Button>
+                      </Grid>
+                    )}
                     <Grid className="term-box" item key={`term-${index}`}>
                       <EditTerm
                         arrayHelpers={arrayHelpers}

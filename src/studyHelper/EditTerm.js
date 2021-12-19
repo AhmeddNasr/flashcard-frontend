@@ -1,11 +1,5 @@
-import {
-  Button,
-  Grid,
-  IconButton,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { FastField, Field, FieldArray, Formik } from "formik";
+import { Grid, IconButton, TextField, Typography } from "@material-ui/core";
+import { FastField, FieldArray } from "formik";
 import React from "react";
 import { Delete } from "@material-ui/icons";
 
@@ -22,11 +16,15 @@ function EditTerm(props) {
       <Grid item xs={12}>
         <Grid container justify="space-between">
           <Typography variant="h4">{`#${props.index + 1}`}</Typography>
-          <IconButton
-            onClick={() => handleClick(props.arrayHelpers, props.index)}
-          >
-            <Delete />
-          </IconButton>
+
+          {/* only render delete button if more than 1 term exists */}
+          {props.formik.values.terms.length > 1 && (
+            <IconButton
+              onClick={() => handleClick(props.arrayHelpers, props.index)}
+            >
+              <Delete />
+            </IconButton>
+          )}
         </Grid>
       </Grid>
       <Grid item xs={12}>

@@ -3,7 +3,7 @@
 function fetchTerms(folderID, setTermState) {
   let terms = [];
   fetch(`http://localhost:8080/api/terms/${folderID}`, {
-    credentials: "include",
+    headers: { Authorization: localStorage.getItem("token") },
   })
     .then((result) => {
       if (result.ok) {
@@ -17,7 +17,7 @@ function fetchTerms(folderID, setTermState) {
         addToArray(data);
         setTermState(terms);
       } else {
-        setTermState([])
+        setTermState([]);
       }
     })
     .catch((err) => {

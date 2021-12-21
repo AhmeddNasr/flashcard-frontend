@@ -1,7 +1,14 @@
-import { Grid, IconButton, TextField, Typography } from "@material-ui/core";
+import {
+  Grid,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import { FastField, FieldArray } from "formik";
 import React from "react";
-import { Delete } from "@material-ui/icons";
+import { Delete, InsertPhoto } from "@material-ui/icons";
+import InputImageButton from "./InputImageButton";
 
 function EditTerm(props) {
   let currentTerm = `terms.${props.index}`;
@@ -83,6 +90,11 @@ function EditTerm(props) {
                             multiline
                             fullWidth
                             helperText="question"
+                            InputProps={{
+                              endAdornment: (
+                                <InputImageButton />
+                              ),
+                            }}
                           />
                         </Grid>
                         <Grid
@@ -113,6 +125,11 @@ function EditTerm(props) {
                             multiline
                             fullWidth
                             helperText="answer"
+                            InputProps={{
+                              endAdornment: (
+                                <InputImageButton />
+                              ),
+                            }}
                           />
                         </Grid>
                       </React.Fragment>

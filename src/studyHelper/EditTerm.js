@@ -1,4 +1,5 @@
 import {
+  Button,
   Grid,
   IconButton,
   InputAdornment,
@@ -7,8 +8,9 @@ import {
 } from "@material-ui/core";
 import { FastField, FieldArray } from "formik";
 import React from "react";
-import { Delete, InsertPhoto } from "@material-ui/icons";
+import { Delete } from "@material-ui/icons";
 import InputImageButton from "./InputImageButton";
+import EditTermQuestionInput from "./EditTermQuestionInput";
 
 function EditTerm(props) {
   let currentTerm = `terms.${props.index}`;
@@ -21,13 +23,14 @@ function EditTerm(props) {
   return (
     <Grid container direction="column" spacing={2}>
       <Grid item xs={12}>
-        <Grid container justify="space-between">
+        <Grid container justifyContent="space-between">
           <Typography variant="h4">{`#${props.index + 1}`}</Typography>
 
           {/* only render delete button if more than 1 term exists */}
           {props.formik.values.terms.length > 1 && (
             <IconButton
               onClick={() => handleClick(props.arrayHelpers, props.index)}
+              size="large"
             >
               <Delete />
             </IconButton>
@@ -59,7 +62,7 @@ function EditTerm(props) {
                       <React.Fragment>
                         <Grid
                           item
-                          xs={2}
+                          xs={1}
                           lg={1}
                           // TODO prevent repeating me
                           className={`edit-class-answer-delete ${
@@ -73,33 +76,22 @@ function EditTerm(props) {
                             onClick={() =>
                               handleClick(arrayHelpers, questionIndex)
                             }
+                            size="large"
                           >
                             <Delete />
                           </IconButton>
                         </Grid>
                         <Grid
                           item
-                          xs={10}
+                          xs={9}
                           lg={5}
                           className="edit-class-question"
                         >
-                          <FastField
-                            as={TextField}
-                            variant="outlined"
-                            name={`${currentQuestion}.question`}
-                            multiline
-                            fullWidth
-                            helperText="question"
-                            InputProps={{
-                              endAdornment: (
-                                <InputImageButton />
-                              ),
-                            }}
-                          />
+                          <EditTermQuestionInput name={`${currentQuestion}.question`}/>
                         </Grid>
                         <Grid
                           item
-                          xs={2}
+                          xs={1}
                           lg={1}
                           // TODO prevent repeating me
                           className={`edit-class-question-delete ${
@@ -113,24 +105,23 @@ function EditTerm(props) {
                             onClick={() =>
                               handleClick(arrayHelpers, questionIndex)
                             }
+                            size="large"
                           >
                             <Delete />
                           </IconButton>
                         </Grid>
-                        <Grid item xs={12} lg={6} className="edit-class-answer">
-                          <FastField
-                            as={TextField}
-                            variant="outlined"
-                            name={`${currentQuestion}.answer`}
-                            multiline
-                            fullWidth
-                            helperText="answer"
-                            InputProps={{
-                              endAdornment: (
-                                <InputImageButton />
-                              ),
-                            }}
-                          />
+                        
+                        <Grid item xs={10} lg={5} className="edit-class-answer">
+                          <EditTermQuestionInput name={`${currentQuestion}.answer`}/>
+                        </Grid>
+                        <Grid item xs={1}>
+                          <Button
+                            onClick={() =>
+                              arrayHelpers.push({ question: "", answer: "" })
+                            }
+                          >
+                            Add
+                          </Button>
                         </Grid>
                       </React.Fragment>
                     );
